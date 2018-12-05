@@ -6,6 +6,9 @@
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
 
+-- hide the status bar
+display.setStatusBar(display.HiddenStatusBar)
+
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -47,7 +50,7 @@ local function CreditsTransition( )
 end 
 
 local function InstructionsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "instructions_screen", {effect = "flipFadeOutIn", time = 500})
 end 
 
 -----------------------------------------------------------------------------------------
@@ -139,7 +142,7 @@ function scene:create( event )
             overFile = "Images/InstructionsButtonPressedDzifaAgbenyoh@2x.png",
 
             -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
+            onRelease = InstructionsTransition
         } ) 
     -- ADD INSTRUCTIONS BUTTON WIDGET
 

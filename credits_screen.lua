@@ -17,6 +17,9 @@ local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
+-- hide the status bar
+display.setStatusBar(display.HiddenStatusBar)
+
 -- Naming Scene
 sceneName = "credits_screen"
 
