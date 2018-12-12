@@ -47,6 +47,9 @@ local theBall
 
 local youWin
 
+local correctObject
+local incorrectObject
+
 local door
 
 local platform2
@@ -262,8 +265,32 @@ local function RemovePhysicsBodies()
  
 end
 
-function ResumeGame()
+local function HideCorrect()
+    correctObject.isVisible = false
+end
 
+-- hide incorrect answer
+local function HideIncorrect()
+    incorrectObject.isVisible = false
+end
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL FUNCTIONS
+-----------------------------------------------------------------------------------------
+
+
+function ResumeGame(answerIsCorrect)
+
+    if (answerIsCorrect == true) then
+        correctObject.isVisible = true
+        --correctSoundChannel = audio.play(correctSound)
+        timer.performWithDelay(2000, HideCorrect)
+    else
+        incorrectObject.isVisible = true
+        --incorrectSoundChannel = audio.play(incorrectSound)
+        --event.target.text = ""
+        timer.performWithDelay(2000, HideIncorrect)
+    end 
     -- make character visible again
     character.isVisible = true
     
@@ -315,7 +342,7 @@ function scene:create( event )
     youWin.width = display.contentWidth
     youWin.height = display.contentHeight
     youWin.isVisible = false
-    
+
     lArrow = display.newImageRect("Images/LeftArrowUnpressed.png", 100, 50)
     lArrow.x = display.contentWidth * 7.2 / 10
     lArrow.y = display.contentHeight * 9.5 / 10
@@ -345,7 +372,7 @@ function scene:create( event )
     door.x = display.contentWidth/2.15 
     door.y = display.contentHeight* 1 / 1.9
     door.myName = "door"
-    door.isVisible = true
+    door.isVisible = false
 
     sceneGroup:insert( door )
     -- Inserting left and right walls and there visibility
@@ -373,7 +400,15 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-
+        -- create the correct text object and make it invisible
+    correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/4, nil, 50)
+    correctObject:setTextColor(200/255, 0/255, 0/255)
+    correctObject.isVisible = false
+    
+    -- create the incorrect text object and make it invisible
+    incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/4, nil, 50)
+    incorrectObject:setTextColor(0/255, 0/255, 200/255)
+    incorrectObject.isVisible = false
     --ball1
     ball1 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
     ball1.x = 840

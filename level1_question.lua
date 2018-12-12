@@ -59,20 +59,13 @@ local textTouched = false
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevel1(answerIsCorrect) 
     composer.hideOverlay("crossFade", 400 )
   
-    ResumeGame()
+    ResumeGame(answerIsCorrect)
 end 
 
-local function HideCorrect()
-    correctObject.isVisible = false
-end
 
--- hide incorrect answer
-local function HideIncorrect()
-    incorrectObject.isVisible = false
-end
 
 
 -----------------------------------------------------------------------------------------
@@ -81,8 +74,9 @@ local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
    
     if (touch.phase == "ended") then
+        -- they got it right
 
-        BackToLevel1( )
+        BackToLevel1( true )
     
     end 
 end
@@ -93,7 +87,7 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         
-        BackToLevel1( )
+        BackToLevel1( false )
         
         
     end 
@@ -105,7 +99,7 @@ local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
 
-        BackToLevel1( )
+        BackToLevel1( false )
         
     end 
 end
@@ -115,7 +109,7 @@ local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
 
-        BackToLevel1( )
+        BackToLevel1( false )
         
     end 
 end
@@ -163,7 +157,6 @@ local function DisplayQuestion()
     wrongText2.text = wrongAnswer2
     wrongText3.text = wrongAnswer3
 
-    --DisplayCorrectOrIncorrect()
 end
 
 local function PositionAnswers()
@@ -231,22 +224,7 @@ local function PositionAnswers()
     end
 end
 
-local function DisplayCorrectOrIncorrect()
-    -- if the users answer and the correct answer are the same:
-    if (userAnswer == answer) then
-        correctObject.isVisible = true
-        --correctSoundChannel = audio.play(correctSound)
-        timer.performWithDelay(2000, HideCorrect)
-        --event.target.text = ""
-    end
 
-    if (userAnswer ~= answer) then
-        incorrectObject.isVisible = true
-        --incorrectSoundChannel = audio.play(incorrectSound)
-        --event.target.text = ""
-        timer.performWithDelay(2000, HideIncorrect)
-    end
-end
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -352,7 +330,6 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemoveTextListeners()
-        DisplayCorrectOrIncorrect()
     end
 
 end --function scene:hide( event )
