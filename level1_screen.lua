@@ -350,19 +350,19 @@ function scene:create( event )
 
     -- Inserting Platforms
 
-    platform2 = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
+    platform2 = display.newImageRect("Images/PlatformDzifa.png", 150, 200)
     platform2.x = display.contentWidth /2.1
     platform2.y = display.contentHeight * 1.2 / 4
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
+    platform3 = display.newImageRect("Images/PlatformDzifa.png", 180, 200)
     platform3.x = display.contentWidth *1 / 5
     platform3.y = display.contentHeight * 3.5 / 5
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Level-1Platform1.png", 180, 50)
+    platform4 = display.newImageRect("Images/PlatformDzifa.png", 180, 200)
     platform4.x = display.contentWidth *4.1 / 5
     platform4.y = display.contentHeight * 2.7 / 5
         
