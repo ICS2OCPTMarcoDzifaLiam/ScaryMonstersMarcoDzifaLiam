@@ -6,6 +6,11 @@
 -- Date: Month Day, Year
 -- Description: This is the credits page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+local CreditsScreenSound = audio.loadSound("Sounds/CreditsScreen.mp3") -- setting a variable to an mp3 file
+local CreditsScreenSoundChannel 
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -121,6 +126,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+              -- play audio
+   CreditsScreenSSoundChannel = audio.play(MainMenuSound) 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
