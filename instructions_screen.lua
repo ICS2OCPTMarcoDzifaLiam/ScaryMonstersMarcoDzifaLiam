@@ -6,7 +6,11 @@
 -- Date: Month Day, Year
 -- Description: This is the credits page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
-
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+local InstructionsSound = audio.loadSound("Sounds/Instructions.mp3") -- setting a variable to an mp3 file
+local InstructionsSoundChannel 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -30,9 +34,6 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 -----------------------------------------------------------------------------------------
 local bkg_image
 local backButton
--- sounds
-local bkgSound = audio.loadSound("Sounds/CreepySound.mp3")
-local bkgSoundChannel = audio.play(bkgSound)
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -120,9 +121,13 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        -- play audio
+     InstructionsSoundChannel = audio.play(InstructionsSound)
+
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+     
     end
 
 end -- function scene:show( event )

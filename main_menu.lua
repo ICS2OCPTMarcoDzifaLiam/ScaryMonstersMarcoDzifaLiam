@@ -1,10 +1,14 @@
 -----------------------------------------------------------------------------------------
---
 -- main_menu.lua
 -- Created by: Your Name
 -- Date: Month Day, Year
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+local MainMenuSound = audio.loadSound("Sounds/MainMenu.mp3") -- setting a variable to an mp3 file
+local MainMenuSoundChannel 
 
 -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
@@ -180,9 +184,10 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then       
+    elseif ( phase == "did" ) then  
+       -- play audio
+     MainMenuSoundChannel = audio.play(MainMenuSoundChannel)     
         
-
     end
 
 end -- function scene:show( event )
@@ -191,6 +196,8 @@ end -- function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
+
+    audio.stop(MainMenuSoundChannnel)
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
