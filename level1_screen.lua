@@ -161,42 +161,41 @@ local function onCollision( self, event )
     --print( event.otherElement )  --the element (number) of the second object which was hit in the collision
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
-        if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball2") or
-            (event.target.myName == "ball3") then
+    if  (event.target.myName == "ball1") or
+        (event.target.myName == "ball2") or
+        (event.target.myName == "ball3") then
 
-            -- get the ball that the user hit
-            theBall = event.target
+        print  ("***Hit the ball")
 
-            -- stop the character from moving
-            motionx = 0
+        -- get the ball that the user hit
+        theBall = event.target
 
-            -- make the character invisible
+        -- stop the character from moving
+        motionx = 0
+
+        -- make the character invisible
+        character.isVisible = false
+
+        -- show overlay with math question
+        composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+
+        -- Increment questions answered
+        questionsAnswered = questionsAnswered + 1
+        print ("***questionsAnswered = " .. questionsAnswered)       
+    end 
+
+    if (event.target.myName == "door") then
+        --check to see if the user has answered 5 questions
+        print ("***Hit Door: questionsAnswered = " .. questionsAnswered)
+
+        if (questionsAnswered == 3) then
+            youWin.isVisible = true
             character.isVisible = false
+            --youWinSoundChannel = audio.play(youWinSound)
+            -- after getting 3 questions right, go to the you win screen
+        end       
 
-            -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-            print ("***questionsAnswered = " .. questionsAnswered)
-
-
-                
-        end 
-
-        if (event.target.myName == "door") then
-                --check to see if the user has answered 5 questions
-                print ("***Hit Door: questionsAnswered = " .. questionsAnswered)
-
-                if (questionsAnswered == 3) then
-                    youWin.isVisible = true
-                    character.isVisible = false
-                    --youWinSoundChannel = audio.play(youWinSound)
-                    -- after getting 3 questions right, go to the you win screen
-                end       
-
-        end        
+    end        
 end
 
 local function AddCollisionListeners()
@@ -247,7 +246,7 @@ end
 
 local function RemovePhysicsBodies()
     physics.removeBody(platform2)
-    physics.removeBody(platform3)
+    physics.removeBody(platform3) 
     physics.removeBody(platform4)
 
     physics.removeBody(spikes1)
@@ -433,10 +432,7 @@ function scene:create( event )
     ball3.myName = "ball3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball3 )
-    
-    
-          
+    sceneGroup:insert( ball3 )            
 
 end --function scene:create( event )
 
