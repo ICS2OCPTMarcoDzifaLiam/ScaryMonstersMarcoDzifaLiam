@@ -186,8 +186,7 @@ function scene:show( event )
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then  
        -- play audio
-     MainMenuSoundChannel = audio.play(MainMenuSoundChannel)     
-        
+     MainMenuSoundChannel = audio.play(MainMenuSound)      
     end
 
 end -- function scene:show( event )
@@ -196,9 +195,10 @@ end -- function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
+    
+     audio.stop(MainMenuSoundChannnel)
 
-    audio.stop(MainMenuSoundChannnel)
-
+   
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
