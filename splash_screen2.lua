@@ -25,7 +25,7 @@ local scene = composer.newScene( sceneName )
 --------------------------------------------------------------------------------------------
 
 -- make a evil sound
-local evil = audio.loadSound("Sound/evil.mp3")
+local evilSound = audio.loadSound("Sounds/evil.mp3")
 local evilSoundChannel 
 
 ----------------------------------------------------------------------------------------
@@ -73,17 +73,17 @@ end
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
-    -- create background
-    local backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
-
--- create vampire
-    local vampire = display.newImageRect("Images/vampire.png", 300, 200)
-
--- ceate monster fun text
-    local Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
-
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
+
+    -- create background
+    backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
+
+-- create vampire
+    vampire = display.newImageRect("Images/Vampire.PNG", 300, 200)
+
+-- ceate monster fun text
+    Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
 
 
     -- set the initial x and y position of vampire.
@@ -96,6 +96,7 @@ function scene:create( event )
 
 
    -- Insert objects into the scene group in order to ONLY be associated with this scene
+   sceneGroup:insert( backgroundImage )
    sceneGroup:insert( vampire )
    sceneGroup:insert( Monsterfun )
 
@@ -122,7 +123,7 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        evilSoundChannel = audio.play(evil)
+        evilSoundChannel = audio.play(evilSound)
 
     
         -- Go to the main menu screen after the given time.
@@ -137,8 +138,7 @@ function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-    audio.stop(bkgSoundChannel)
-
+    
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
@@ -156,6 +156,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         
         -- stop the creepy channel for this screen
+        audio.stop (evilSoundChannel)
     
     end
 

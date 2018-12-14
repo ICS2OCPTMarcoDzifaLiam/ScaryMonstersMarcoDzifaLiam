@@ -91,9 +91,6 @@ function scene:create( event )
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
-
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------   
@@ -186,7 +183,7 @@ function scene:show( event )
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then  
        -- play audio
-     MainMenuSoundChannel = audio.play(MainMenuSound)      
+        MainMenuSoundChannel = audio.play(MainMenuSound)      
     end
 
 end -- function scene:show( event )
@@ -195,8 +192,6 @@ end -- function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-    
-     audio.stop(MainMenuSoundChannnel)
 
    
     -- Creating a group that associates objects with the scene
@@ -217,6 +212,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        audio.stop (MainMenuSoundChannel)
     end
 
 end -- function scene:hide( event )
