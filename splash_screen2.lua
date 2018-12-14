@@ -24,8 +24,9 @@ local scene = composer.newScene( sceneName )
 -- SOUNDS
 --------------------------------------------------------------------------------------------
 
-local bkgSound = audio.loadSound( "Sounds/CSound.mp3" )
-local bkgSoundChannel
+-- make a evil sound
+local evil = audio.loadSound("Sound/evil.mp3")
+local evilSoundChannel 
 
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -33,39 +34,35 @@ local bkgSoundChannel
  
 -- The local variables for this scene
 local vampire
-local vampireWaving
+local Monsterfun
+local backgroundImage
 
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
-function DisplayVampireWaving()
-    -- made vampire waving visible
-    vampireWaving.isVisible = true
-    -- made vampire visible
-    vampire.isVisible = false
-    -- called the display vampire function
-    timer.performWithDelay(500, DisplayVampire)
-    -- made vampire fade out
-    vampireWaving.alpha = vampire.alpha - 0.17
-end
-
-function DisplayVampire()
-    -- made vampire visible
-    vampire.isVisible = true
-    -- made vampire waving invisible
-    vampireWaving.isVisible = false
-    -- called the function display vampire waving
-    timer.performWithDelay(500, DisplayVampireWaving)
-    -- shrunk the vampire
-    vampire.alpha = vampire.alpha - 0.17
-end
-
-
 -- The function that will go to the main menu 
 local function gotoMainMenu()
+    
     composer.gotoScene( "main_menu" )
+end
+
+
+-- The function called when the scene is issued to appear on screen
+-- Function: MoveVampire
+-- Input: this function accepts an event listener
+-- Output: none
+-- Description: This function adds the scroll speed to the x-value of the Vampire
+local function MoveVampire(event)
+
+    -- add the scroll speed to the x-value of the vampire
+    vampire.x = vampire.x + scrollSpeed
+
+
+    -- change the transparency of the vampire every time it moves
+    -- so that it fades out.
+    vampire.alpha = vampire.alpha - 0.00000000000001
 end
 
 -----------------------------------------------------------------------------------------
@@ -73,44 +70,40 @@ end
 -----------------------------------------------------------------------------------------
 
 
-
 -- The function called when the screen doesn't exist
 function scene:create( event )
+
+    -- create background
+    local backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
+
+-- create vampire
+    local vampire = display.newImageRect("Images/vampire.png", 300, 200)
+
+-- ceate monster fun text
+    local Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -- Insert the vampire image
-    vampireWaving = display.newImage("Images/VampireWaving.PNG")
+
+    -- set the initial x and y position of vampire.
+   vampire.x = 500
+   vampire.y = display.contentHeight/2
+
+  -- set the initial x and y position of monsterfun.
+   Monsterfun.x = 500
+   Monsterfun.y = display.contentHeight/5
 
 
-    -- set the initial x and y position of the vampire
-    vampireWaving.y = display.contentHeight/2
-    vampireWaving.x = display.contentWidth/2
-    vampireWaving.height = display.contentHeight
-    vampireWaving.width = display.contentWidth
-    vampireWaving.isVisible = false
+   -- Insert objects into the scene group in order to ONLY be associated with this scene
+   sceneGroup:insert( vampire )
+   sceneGroup:insert( Monsterfun )
 
-    -- Insert the vampire image
-    vampire = display.newImage("Images/Vampire.PNG")
-
-
-    -- set the initial x and y position of the waving vampire
-    vampire.x = display.contentWidth/2
-    vampire.y = display.contentHeight/2
-    vampire.height = display.contentHeight
-    vampire.width =  display.contentWidth
-    vampire.isVisible = false
-
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( vampire )
-    sceneGroup:insert( vampireWaving )
 end -- function scene:create( event )
 
 --------------------------------------------------------------------------------------------
 
--- The function called when the scene is issued to appear on screen
+
 function scene:show( event )
 
     -- Creating a group that associates objects with the scene
@@ -129,16 +122,16 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        bkgSoundChannel = audio.play(bkgSound)
+        evilSoundChannel = audio.play(evil)
 
-        -- Call the DisplayVampire function as soon as we enter the frame.
-        DisplayVampire()
+    
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
         
-    end
 
-end --function scene:show( event )
+
+    end --function scene:show( event )
+ end
 
 -----------------------------------------------------------------------------------------
 
@@ -197,3 +190,5 @@ scene:addEventListener( "destroy", scene )
 -----------------------------------------------------------------------------------------
 
 return scene
+
+
