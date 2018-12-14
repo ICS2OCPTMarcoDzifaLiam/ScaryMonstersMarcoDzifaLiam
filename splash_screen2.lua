@@ -1,54 +1,199 @@
 -----------------------------------------------------------------------------------------
--- Title: Company Logo Animation
--- Name: Dzifa
--- Course: ICS2O/3C
--- This program animates the company logo on the screen
+-- splash_screen.lua
+-- Created by: Your Name
+-- Date: Month Day, Year
+-- Description: This is the splash screen of the game. It displays the 
+-- company logo that...
 -----------------------------------------------------------------------------------------
 
--- hide status bar
+-- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
 
--- global variables
-scrollSpeed = 3
+-- Use Composer Library
+local composer = require( "composer" )
 
--- make a evil sound
-local evil = audio.loadSound("Sound/evil.mp3")
-local evilSoundChannel 
+-- Name the Scene
+sceneName = "splash_screen2"
 
--- background image with width and height
-local backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
-local vampire = display.newImageRect("Images/vampire.png", 300, 200)
-local Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
+-----------------------------------------------------------------------------------------
 
--- set the initial x and y position of vampire.
-vampire.x = 500
-vampire.y = display.contentHeight/2
+-- Create Scene Object
+local scene = composer.newScene( sceneName )
 
--- set the initial x and y position of monsterfun.
-Monsterfun.x = 500
-Monsterfun.y = display.contentHeight/5
-evilSoundChannel = audio.play(evil)
+--------------------------------------------------------------------------------------------
+-- SOUNDS
+--------------------------------------------------------------------------------------------
 
+local bkgSound = audio.loadSound( "Sounds/CSound.mp3" )
+local bkgSoundChannel
 
--- Function: MoveVampire
--- Input: this function accepts an event listener
--- Output: none
--- Description: This function adds the scroll speed to the x-value of the Vampire
-local function MoveVampire(event)
-	-- add the scroll speed to the x-value of the cutedog
-	vampire.x = vampire.x + scrollSpeed
+----------------------------------------------------------------------------------------
+-- LOCAL VARIABLES
+-----------------------------------------------------------------------------------------
+ 
+-- The local variables for this scene
+local vampire
+local vampireWaving
 
 
-	-- change the transparency of the vampire every time it moves
-	-- so that it fades out.
-	vampire.alpha = vampire.alpha - 0.00000000000001
+--------------------------------------------------------------------------------------------
+-- LOCAL FUNCTIONS
+--------------------------------------------------------------------------------------------
+
+function DisplayVampireWaving()
+    -- made vampire waving visible
+    vampireWaving.isVisible = true
+    -- made vampire visible
+    vampire.isVisible = false
+    -- called the display vampire function
+    timer.performWithDelay(500, DisplayVampire)
+    -- made vampire fade out
+    vampireWaving.alpha = vampire.alpha - 0.17
 end
 
--- MoveVampire will be called over and over again
-Runtime:addEventListener("enterFrame", MoveVampire)
+function DisplayVampire()
+    -- made vampire visible
+    vampire.isVisible = true
+    -- made vampire waving invisible
+    vampireWaving.isVisible = false
+    -- called the function display vampire waving
+    timer.performWithDelay(500, DisplayVampireWaving)
+    -- shrunk the vampire
+    vampire.alpha = vampire.alpha - 0.17
+end
+
+
+-- The function that will go to the main menu 
+local function gotoMainMenu()
+    composer.gotoScene( "main_menu" )
+end
+
+-----------------------------------------------------------------------------------------
+-- GLOBAL SCENE FUNCTIONS
+-----------------------------------------------------------------------------------------
 
 
 
+-- The function called when the screen doesn't exist
+function scene:create( event )
+
+    -- Creating a group that associates objects with the scene
+    local sceneGroup = self.view
+
+    -- Insert the vampire image
+    vampireWaving = display.newImage("Images/VampireWaving.PNG")
 
 
- 
+    -- set the initial x and y position of the vampire
+    vampireWaving.y = display.contentHeight/2
+    vampireWaving.x = display.contentWidth/2
+    vampireWaving.height = display.contentHeight
+    vampireWaving.width = display.contentWidth
+    vampireWaving.isVisible = false
+
+    -- Insert the vampire image
+    vampire = display.newImage("Images/Vampire.PNG")
+
+
+    -- set the initial x and y position of the waving vampire
+    vampire.x = display.contentWidth/2
+    vampire.y = display.contentHeight/2
+    vampire.height = display.contentHeight
+    vampire.width =  display.contentWidth
+    vampire.isVisible = false
+
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( vampire )
+    sceneGroup:insert( vampireWaving )
+end -- function scene:create( event )
+
+--------------------------------------------------------------------------------------------
+
+-- The function called when the scene is issued to appear on screen
+function scene:show( event )
+
+    -- Creating a group that associates objects with the scene
+    local sceneGroup = self.view
+
+    -----------------------------------------------------------------------------------------
+
+    local phase = event.phase
+
+    -----------------------------------------------------------------------------------------
+
+    -- Called when the scene is still off screen (but is about to come on screen).
+    if ( phase == "will" ) then
+       
+    -----------------------------------------------------------------------------------------
+
+    elseif ( phase == "did" ) then
+        -- start the splash screen music
+        bkgSoundChannel = audio.play(bkgSound)
+
+        -- Call the DisplayVampire function as soon as we enter the frame.
+        DisplayVampire()
+        -- Go to the main menu screen after the given time.
+        timer.performWithDelay ( 3000, gotoMainMenu)          
+        
+    end
+
+end --function scene:show( event )
+
+-----------------------------------------------------------------------------------------
+
+-- The function called when the scene is issued to leave the screen
+function scene:hide( event )
+    audio.stop(bkgSoundChannel)
+
+    -- Creating a group that associates objects with the scene
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    -----------------------------------------------------------------------------------------
+
+    -- Called when the scene is on screen (but is about to go off screen).
+    -- Insert code here to "pause" the scene.
+    -- Example: stop timers, stop animation, stop audio, etc.
+    if ( phase == "will" ) then  
+
+    -----------------------------------------------------------------------------------------
+
+    -- Called immediately after scene goes off screen.
+    elseif ( phase == "did" ) then
+        
+        -- stop the creepy channel for this screen
+    
+    end
+
+end --function scene:hide( event )
+
+-----------------------------------------------------------------------------------------
+
+-- The function called when the scene is issued to be destroyed
+function scene:destroy( event )
+
+    -- Creating a group that associates objects with the scene
+    local sceneGroup = self.view
+
+    -----------------------------------------------------------------------------------------
+
+
+    -- Called prior to the removal of scene's view ("sceneGroup").
+    -- Insert code here to clean up the scene.
+    -- Example: remove display objects, save state, etc.
+end -- function scene:destroy( event )
+
+-----------------------------------------------------------------------------------------
+-- EVENT LISTENERS
+-----------------------------------------------------------------------------------------
+
+-- Adding Event Listeners
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
+
+-----------------------------------------------------------------------------------------
+
+return scene
