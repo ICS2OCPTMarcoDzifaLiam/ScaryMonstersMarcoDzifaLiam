@@ -25,7 +25,7 @@ local scene = composer.newScene( sceneName )
 --------------------------------------------------------------------------------------------
 
 -- make a evil sound
-local evil = audio.loadSound("Sound/evil.mp3")
+local evil = audio.loadSound("Sounds/evil.mp3")
 local evilSoundChannel 
 
 ----------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ local evilSoundChannel
 -----------------------------------------------------------------------------------------
  
 -- The local variables for this scene
-local vampire
+local Vampire
 local Monsterfun
 local backgroundImage
 
@@ -44,7 +44,6 @@ local backgroundImage
 
 -- The function that will go to the main menu 
 local function gotoMainMenu()
-    
     composer.gotoScene( "main_menu" )
 end
 
@@ -74,16 +73,16 @@ end
 function scene:create( event )
 
     -- create background
-    local backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
+     backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
 
 -- create vampire
-    local vampire = display.newImageRect("Images/vampire.png", 300, 200)
+     vampire = display.newImageRect("Images/vampire.png", 300, 200)
 
 -- ceate monster fun text
-    local Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
+     Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
 
     -- Creating a group that associates objects with the scene
-    local sceneGroup = self.view
+     sceneGroup = self.view
 
 
     -- set the initial x and y position of vampire.
@@ -137,8 +136,7 @@ function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-    audio.stop(bkgSoundChannel)
-
+    audio.stop(evilSound)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
