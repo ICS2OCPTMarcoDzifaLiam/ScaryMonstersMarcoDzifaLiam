@@ -76,7 +76,7 @@ function scene:create( event )
      backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
 
 -- create vampire
-     vampire = display.newImageRect("Images/Vampire.png", 300, 200)
+     vampire = display.newImageRect("Images/vampire.png", 300, 200)
 
 -- ceate monster fun text
      Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
@@ -136,7 +136,7 @@ function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-    audio.stop()
+    audio.stop(evilSound)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
