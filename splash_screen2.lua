@@ -77,7 +77,7 @@ function scene:create( event )
      backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
 
 -- create vampire
-     vampire = display.newImageRect("Images/VampireWaving@2x.png", 300, 200)
+     vampire = display.newImageRect("Images/VampireWaving@2x.png", 200, 200)
 
 -- ceate monster fun text
      Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
@@ -100,6 +100,8 @@ function scene:create( event )
    sceneGroup:insert( Monsterfun )
 
 end -- function scene:create( event )
+
+
 
 --------------------------------------------------------------------------------------------
 

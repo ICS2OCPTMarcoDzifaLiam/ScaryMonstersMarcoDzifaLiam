@@ -8,7 +8,7 @@
 -----------------------------------------------------------------------------------------
 --SOUNDS
 -----------------------------------------------------------------------------------------
-local Level1ScreenSound = audio.loadSound("Sounds/CreditsScreen.mp3") -- setting a variable to an mp3 file
+local Level1ScreenSound = audio.loadSound("Sounds/Level1Screen.mp3.mp3") -- setting a variable to an mp3 file
 local Level1ScreenSoundChannel 
 
 -----------------------------------------------------------------------------------------
@@ -474,7 +474,7 @@ end --function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-
+ audio.stop(Level1Screen)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
