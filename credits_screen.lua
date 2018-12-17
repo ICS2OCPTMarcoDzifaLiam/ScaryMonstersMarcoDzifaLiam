@@ -126,8 +126,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-              -- play audio
-   CreditsScreenSSoundChannel = audio.play(MainMenuSound) 
+     -- play audio
+    CreditsScreenSoundChannel = audio.play(CreditsScreenSound) 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
@@ -139,7 +139,7 @@ end -- function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-
+ audio.stop(CreditsScreenSoundChannel)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 

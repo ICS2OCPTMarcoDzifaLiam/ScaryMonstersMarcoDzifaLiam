@@ -33,7 +33,7 @@ local evilSoundChannel
 -----------------------------------------------------------------------------------------
  
 -- The local variables for this scene
-local Vampire
+local vampire
 local Monsterfun
 local backgroundImage
 
@@ -58,7 +58,6 @@ local function MoveVampire(event)
     -- add the scroll speed to the x-value of the vampire
     vampire.x = vampire.x + scrollSpeed
 
-
     -- change the transparency of the vampire every time it moves
     -- so that it fades out.
     vampire.alpha = vampire.alpha - 0.00000000000001
@@ -71,18 +70,19 @@ end
 
 -- The function called when the screen doesn't exist
 function scene:create( event )
+    -- Creating a group that associates objects with the scene
+    sceneGroup = self.view
 
     -- create background
      backgroundImage = display.newImageRect("Images/RainbowBackground@2x.png", 2048, 1536)
 
 -- create vampire
-     vampire = display.newImageRect("Images/vampire.png", 300, 200)
+     vampire = display.newImageRect("Images/VampireWaving@2x.png", 300, 200)
 
 -- ceate monster fun text
      Monsterfun = display.newImageRect("Images/Monsterfun.png", 300, 200)
 
-    -- Creating a group that associates objects with the scene
-     sceneGroup = self.view
+
 
 
     -- set the initial x and y position of vampire.
@@ -95,6 +95,7 @@ function scene:create( event )
 
 
    -- Insert objects into the scene group in order to ONLY be associated with this scene
+   sceneGroup:insert( backgroundImage)
    sceneGroup:insert( vampire )
    sceneGroup:insert( Monsterfun )
 

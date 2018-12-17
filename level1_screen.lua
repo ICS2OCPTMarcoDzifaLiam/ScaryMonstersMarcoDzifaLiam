@@ -5,6 +5,11 @@
 -- Date: Month Day, Year
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+local Level1ScreenSound = audio.loadSound("Sounds/CreditsScreen.mp3") -- setting a variable to an mp3 file
+local Level1ScreenSoundChannel 
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -453,6 +458,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+         Level1ScreenSoundChannel = audio.play(Level1ScreenSound)
 
         AddPhysicsBodies()
         -- Called when the scene is now on screen.
