@@ -123,7 +123,7 @@ local function RemoveRuntimeListeners()
     Runtime:removeEventListener("touch", stop )
 end
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/PlayButtonUnpressedMarcoS.png", 100, 150)
+    character = display.newImageRect("Images/Monster1.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 75
@@ -409,7 +409,7 @@ function scene:create( event )
     incorrectObject:setTextColor(0/255, 0/255, 200/255)
     incorrectObject.isVisible = false
     --ball1
-    ball1 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
+    ball1 = display.newImageRect ("Images/Character1.png", 70, 70)
     ball1.x = 840
     ball1.y = 355
     ball1.myName = "ball1"
@@ -418,7 +418,7 @@ function scene:create( event )
     sceneGroup:insert( ball1 )
 
     --ball2
-    ball2 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
+    ball2 = display.newImageRect ("Images/Character2.png", 70, 70)
     ball2.x = 490
     ball2.y = 170
     ball2.myName = "ball2"
@@ -426,7 +426,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( ball2 )
 
-    ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
+    ball3 = display.newImageRect ("Images/Character3.png", 70, 70)
     ball3.x = 200
     ball3.y = 480
     ball3.myName = "ball3"
