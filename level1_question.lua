@@ -31,6 +31,7 @@ local secondNumber
 
 local correctObject
 local incorrectObject
+local temp
 
 local answer
 local wrongAnswer1
@@ -135,14 +136,14 @@ end
 
 local function DisplayQuestion()
     --creating random numbers
-    firstNumber = math.random (0,15)
-    secondNumber = math.random (0,15)
+    firstNumber = math.random (4,15)
+    secondNumber = math.random (4,15)
 
     -- calculate answer
     answer = firstNumber + secondNumber
 
     -- calculate wrong answers
-    wrongAnswer1 = answer + math.random(1, 3)
+    wrongAnswer1 = answer - math.random(1, 3)
     wrongAnswer2 = answer + math.random(4, 6)
     wrongAnswer3 = answer + math.random(7, 9)
 

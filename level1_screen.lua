@@ -69,8 +69,8 @@ local floor
 local motionx = 0
 local SPEED = 6
 local nSPEED = -6
-local LINEAR_VELOCITY = -100
-local GRAVITY = 8
+local LINEAR_VELOCITY = -225
+local GRAVITY = 1
 
 ---------------------------------------------------------------
 -- LOCAL FUNCTIONS
