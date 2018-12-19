@@ -8,8 +8,8 @@
 -----------------------------------------------------------------------------------------
 --SOUNDS
 -----------------------------------------------------------------------------------------
-local Level1ScreenSound = audio.loadSound("Sounds/Level1Screen.mp3.mp3") -- setting a variable to an mp3 file
-local Level1ScreenSoundChannel 
+local Level1Sound = audio.loadSound("Sounds/Level1.mp3") -- setting a variable to an mp3 file
+local Level1SoundChannel 
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -458,7 +458,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-         Level1ScreenSoundChannel = audio.play(Level1ScreenSound)
+         Level1SoundChannel = audio.play(Level1Sound,{ loops = -1 })
 
         AddPhysicsBodies()
         -- Called when the scene is now on screen.
@@ -474,7 +474,7 @@ end --function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
- audio.stop(Level1Screen)
+ audio.stop(Level1Sound)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase

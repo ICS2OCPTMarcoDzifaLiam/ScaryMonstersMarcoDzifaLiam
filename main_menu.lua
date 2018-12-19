@@ -183,7 +183,7 @@ function scene:show( event )
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then  
        -- play audio
-        MainMenuSoundChannel = audio.play(MainMenuSound)      
+        MainMenuSoundChannel = audio.play(MainMenuSound,{ loops = -1 })      
     end
 
 end -- function scene:show( event )
