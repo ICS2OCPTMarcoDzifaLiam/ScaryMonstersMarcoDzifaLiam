@@ -22,6 +22,9 @@ local lionessGrowlSoundChannel
 local Kids Booingsound = audio.loadSound( "Sounds/Kids Booing.mp3" )
 local lionessGrowlSoundChannel
 
+local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
+local Level2SoundChannel 
+
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -38,7 +41,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -93,7 +96,7 @@ local correct
 local incorrect 
 
 -- Displays the level text of time text
-local level1Text 
+local levelText 
 
 -- Boolean variable that states if user clicked the answer or not
 local alreadyClickedAnswer = false
@@ -231,7 +234,7 @@ local function CheckPoints()
     if (numberCorrect == 2) then
 
         -- display the you win screen
-        composer.gotoScene("you_Win")
+        composer.gotoScene("YouWin")
 
         --play you win sound
         youwinSoundChannel = audio.play(youwinSound)
@@ -373,7 +376,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image
-    bkg = display.newImageRect("Images/Level 2 Screen.png", display.contentWidth, display.contentHeight)
+    bkg = display.newImageRect("Images/Level1ScreenMarcoS@2x.png.", display.contentWidth, display.contentHeight)
     bkg.x = display.contentCenterX
     bkg.y = display.contentCenterY
     bkg.width = display.contentWidth
@@ -433,7 +436,7 @@ function scene:create( event )
     sceneGroup:insert( congratulationText )
     sceneGroup:insert( correct )
     sceneGroup:insert( incorrect )
-    sceneGroup:insert( level2Text )
+    sceneGroup:insert( level1Text )
 end
 
 -----------------------------------------------------------------------------------------
@@ -456,6 +459,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        -- play audio
+        Level2SoundChannel = audio.play(Level2Sound,{ loops = -1 }) 
 
         -- initialize the number of lives and number correct 
         lives = 2
@@ -494,6 +499,8 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+         -- Called immediately after scene goes off screen.
+        audio.stop (Level2SoundChannel)
     end
 
 end
