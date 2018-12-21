@@ -178,7 +178,7 @@ local function LoseScreenTransition( )
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
 end 
 local function WinScreenTransition( )        
-    composer.gotoScene( "you_Win", {effect = "zoomInOutFade", time = 1000})
+    composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
 end 
 
 -- The function that displays the equation and determines the answer and the wrong answers
@@ -218,7 +218,7 @@ local function RestartScene()
 
     elseif
         (Correct == 3) then
-        composer.gotoScene("you_win")
+        composer.gotoScene("YouWin.png")
 
 
     else 
@@ -234,7 +234,7 @@ local function CheckPoints()
     if (numberCorrect == 2) then
 
         -- display the you win screen
-        composer.gotoScene("YouWin")
+        composer.gotoScene("YouWin.png")
 
         --play you win sound
         youwinSoundChannel = audio.play(youwinSound)
@@ -376,7 +376,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image
-    bkg = display.newImageRect("Images/Level1ScreenMarcoS@2x.png.", display.contentWidth, display.contentHeight)
+    bkg = display.newImageRect("Images/Level2Screen.png", display.contentWidth, display.contentHeight)
     bkg.x = display.contentCenterX
     bkg.y = display.contentCenterY
     bkg.width = display.contentWidth
