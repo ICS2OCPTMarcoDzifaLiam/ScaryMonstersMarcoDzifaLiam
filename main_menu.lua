@@ -43,11 +43,27 @@ local bkg_image
 local playButton
 local creditsButton
 local instructionsButton
+local muteButton
+local unMuteButton
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
+-- play audio
+local function PauseAudio(touch)
+    audio.pause(MainMenuSound)
+    audioMuted = true
+    muteButton.isVisible = false
+    unMuteButton.isVisible = true
+end
 
+-- play audio
+local function PlayAudio(touch)
+    audio.play(MainMenuSound)
+    audioMuted = false
+    muteButton.isVisible = true
+    unMuteButton.isVisible = false
+end
 -- Creating Transition Function to Credits Page
 local function CreditsTransition( )       
     composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})
@@ -88,8 +104,7 @@ function scene:create( event )
     bkg_image.height = display.contentHeight
 
 
-    -- Associating display objects with this scene 
-    sceneGroup:insert( bkg_image )
+    
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
@@ -112,6 +127,19 @@ function scene:create( event )
             onRelease = Level1ScreenTransition 
         } )
 
+    muteButton = display.newImage("Images/MuteButtonUnPressedMarcoS@2x.png")
+    muteButton.x = display.contentWidth*7/8
+    muteButton.y = display.contentHeight*1/8
+    muteButton.width = 250
+    muteButton.height = 200
+    muteButton.isVisible = true
+
+    unMuteButton = display.newImage("Images/MuteButtonPressedMarcoS@2x.png")
+    unMuteButton.x = display.contentWidth*7/8
+    unMuteButton.y = display.contentHeight*1/8
+    unMuteButton.width = 250
+    unMuteButton.height = 200
+    unMuteButton.isVisible = false
     -----------------------------------------------------------------------------------------
 
     -- Creating Credits Button
@@ -150,9 +178,13 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Associating button widgets with this scene
-   sceneGroup:insert( playButton )
-   sceneGroup:insert( creditsButton )
-   sceneGroup:insert( instructionsButton )
+    -- Associating display objects with this scene 
+    sceneGroup:insert( bkg_image )
+    sceneGroup:insert( playButton )
+    sceneGroup:insert( creditsButton )
+    sceneGroup:insert( instructionsButton )
+    sceneGroup:insert( muteButton )
+    sceneGroup:insert( unmuteButton )
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
 end -- function scene:create( event )   
@@ -182,6 +214,10 @@ function scene:show( event )
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then  
+        -- play audio
+        muteButton:addEventListener("touch", PauseAudio)
+        unMuteButton:addEventListener("touch", PlayAudio)
+
        -- play audio
         MainMenuSoundChannel = audio.play(MainMenuSound,{ loops = -1 })      
     end
@@ -213,6 +249,8 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         audio.stop (MainMenuSoundChannel)
+        muteButton:removeEventListener("touch", PauseAudio)
+        unMuteButton:removeEventListener("touch", PlayAudio)
     end
 
 end -- function scene:hide( event )
