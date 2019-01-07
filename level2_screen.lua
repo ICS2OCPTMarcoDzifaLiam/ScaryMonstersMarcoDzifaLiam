@@ -10,7 +10,7 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 --Spring sound effect
-local wrongsound = audio.loadSound( "Sounds/WrongBuzzer.mp3" )
+local wrongsound = audio.loadSound( "Sounds/Incorrect.mp3" )
 local wrongSoundChannel
 
 local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
