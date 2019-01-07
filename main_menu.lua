@@ -47,7 +47,21 @@ local instructionsButton
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
+-- play audio
+local function PauseAudio(touch)
+    audio.pause(MainMenuSound)
+    audioMuted = true
+    muteButton.isVisible = false
+    unMuteButton.isVisible = true
+end
 
+-- play audio
+local function PlayAudio(touch)
+    audio.play(MainMenuSound)
+    audioMuted = false
+    muteButton.isVisible = true
+    unMuteButton.isVisible = false
+end
 -- Creating Transition Function to Credits Page
 local function CreditsTransition( )       
     composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})
@@ -111,7 +125,19 @@ function scene:create( event )
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition 
         } )
+    muteButton = display.newImage("Images/MuteButtonUnPressedMarcoS@2x.png")
+    muteButton.x = display.contentWidth*7/8
+    muteButton.y = display.contentHeight*1/8
+    muteButton.width = 250
+    muteButton.height = 200
+    muteButton.isVisible = true
 
+    unMuteButton = display.newImage("Images/MuteButtonPressedMarcoS@2x.png")
+    unMuteButton.x = display.contentWidth*7/8
+    unMuteButton.y = display.contentHeight*1/8
+    unMuteButton.width = 250
+    unMuteButton.height = 200
+    unMuteButton.isVisible = false
     -----------------------------------------------------------------------------------------
 
     -- Creating Credits Button
@@ -182,7 +208,10 @@ function scene:show( event )
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then  
-       -- play audio
+        -- play audio
+        muteButton:addEventListener("touch", PauseAudio)
+        unMuteButton:addEventListener("touch", PlayAudio)
+
         MainMenuSoundChannel = audio.play(MainMenuSound)      
     end
 
