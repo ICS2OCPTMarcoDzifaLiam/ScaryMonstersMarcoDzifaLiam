@@ -43,6 +43,8 @@ local bkg_image
 local playButton
 local creditsButton
 local instructionsButton
+local muteButton
+local unMuteButton
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -102,8 +104,7 @@ function scene:create( event )
     bkg_image.height = display.contentHeight
 
 
-    -- Associating display objects with this scene 
-    sceneGroup:insert( bkg_image )
+    
 
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
@@ -125,6 +126,7 @@ function scene:create( event )
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition 
         } )
+
     muteButton = display.newImage("Images/MuteButtonUnPressedMarcoS@2x.png")
     muteButton.x = display.contentWidth*7/8
     muteButton.y = display.contentHeight*1/8
@@ -176,9 +178,13 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Associating button widgets with this scene
-   sceneGroup:insert( playButton )
-   sceneGroup:insert( creditsButton )
-   sceneGroup:insert( instructionsButton )
+    -- Associating display objects with this scene 
+    sceneGroup:insert( bkg_image )
+    sceneGroup:insert( playButton )
+    sceneGroup:insert( creditsButton )
+    sceneGroup:insert( instructionsButton )
+    sceneGroup:insert( muteButton )
+    sceneGroup:insert( unmuteButton )
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
 end -- function scene:create( event )   
@@ -212,7 +218,8 @@ function scene:show( event )
         muteButton:addEventListener("touch", PauseAudio)
         unMuteButton:addEventListener("touch", PlayAudio)
 
-        MainMenuSoundChannel = audio.play(MainMenuSound)      
+       -- play audio
+        MainMenuSoundChannel = audio.play(MainMenuSound,{ loops = -1 })      
     end
 
 end -- function scene:show( event )
@@ -242,6 +249,8 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         audio.stop (MainMenuSoundChannel)
+        muteButton:removeEventListener("touch", PauseAudio)
+        unMuteButton:removeEventListener("touch", PlayAudio)
     end
 
 end -- function scene:hide( event )

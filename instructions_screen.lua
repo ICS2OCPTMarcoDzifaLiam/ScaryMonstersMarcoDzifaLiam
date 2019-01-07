@@ -122,7 +122,7 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- play audio
-     InstructionsSoundChannel = audio.play(InstructionsSound)
+     InstructionsSoundChannel = audio.play(InstructionsSound,{ loops = -1 })
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
@@ -136,7 +136,7 @@ end -- function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-
+audio.stop(InstructionsSoundChannel)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 

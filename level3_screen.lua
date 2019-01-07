@@ -183,7 +183,7 @@ local function onCollision( self, event )
             RemoveRuntimeListeners()
 
             -- remove the character from the display
-            --display.remove(character)
+            character.isVisible = false
 
             -- decrease number of lives
             --numLives = numLives - 1
