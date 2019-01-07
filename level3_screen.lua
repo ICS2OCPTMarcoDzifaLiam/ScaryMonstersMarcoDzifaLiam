@@ -8,7 +8,7 @@
 -----------------------------------------------------------------------------------------
 --SOUNDS
 -----------------------------------------------------------------------------------------
-local Level1ScreenSound = audio.loadSound("Sounds/Level1Screen.mp3.mp3") -- setting a variable to an mp3 file
+local Level1ScreenSound = audio.loadSound("Sounds/Level1.mp3") -- setting a variable to an mp3 file
 local Level1ScreenSoundChannel 
 
 -----------------------------------------------------------------------------------------
