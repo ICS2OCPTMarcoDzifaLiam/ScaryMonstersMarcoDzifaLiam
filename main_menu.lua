@@ -184,7 +184,7 @@ function scene:create( event )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
     sceneGroup:insert( muteButton )
-    sceneGroup:insert( unmuteButton )
+    sceneGroup:insert( unMuteButton )
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 
 end -- function scene:create( event )   
