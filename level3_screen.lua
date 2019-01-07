@@ -105,6 +105,9 @@ local function stop (event)
         motionx = 0
     end
 end
+local function GoToLevel2()
+    composer.gotoScene( "level2_screen" )
+end
 
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
@@ -232,6 +235,7 @@ local function onCollision( self, event )
         if (questionsAnswered == 3) then
             youWin.isVisible = true
             character.isVisible = false
+            timer.performWithDelay(2000, GoToLevel2)
             --youWinSoundChannel = audio.play(youWinSound)
             -- after getting 3 questions right, go to the you win screen
         end       
