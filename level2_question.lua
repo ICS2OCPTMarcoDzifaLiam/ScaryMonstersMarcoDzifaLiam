@@ -10,30 +10,18 @@
 -- SOUNDS
 -----------------------------------------------------------------------------------------
 --Spring sound effect
-local level2sound = audio.loadSound( "Sounds/level2.mp3" )
-local level2SoundChannel
+local wrongsound = audio.loadSound( "Sounds/Incorrect.mp3" )
+local wrongSoundChannel
 
------------------------------------------------------------------------------------------
--- INITIALIZATIONS
------------------------------------------------------------------------------------------
+local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
+local correctSoundChannel
 
--- hide the status bar
-display.setStatusBar(display.HiddenStatusBar)
 
--- Use Composer Libraries
-local composer = require( "composer" )
-local widget = require( "widget" )
+local Gameoversound = audio.loadSound( "Sounds/GameOver.mp3" )
+local GameoverSoundChannel
 
------------------------------------------------------------------------------------------
-
--- Naming Scene
-sceneName = "level_screen"
-
------------------------------------------------------------------------------------------
-
--- Creating Scene Object
-local scene = composer.newScene( sceneName )
-
+local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
+local Level2SoundChannel 
 
 -------------------------------------------------------------------------------------------
  -- Insert the background image and set it to the center of the screen
