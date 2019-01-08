@@ -49,7 +49,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_screen"
+sceneName = "level2_screen" 
 
 -----------------------------------------------------------------------------------------
 
@@ -83,61 +83,36 @@ local numberPoints = 0
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
--- *** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, SHOW A YOU LOSE IMAGE 
-        -- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE
-        if (lives == 2) then
-            heart2.isVisible = false
-            elseif (lives == 1) then
-                heart1.isVisible = false
-            end
-
-           -- *** CALL THE FUNCTION TO ASK A NEW QUESTION
-    end
-end
-
--- function that calls the timer
-local function startTimer()
-    -- create a countdown timer that loops infinitely
-    countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
-end
 
 local function UpdateHearts()
-    if (lives == 4) then
+    if (lives == 3) then
             heart1.isVisible = true
             heart2.isVisible = true
             heart3.isVisible = true
-            heart4.isVisible = true
+    
 
 
-        elseif (lives == 3) then
-            heart1.isVisible = true
-            heart2.isVisible = true
-            heart3.isVisible = true
-            heart4.isVisible = false
-
-        
         elseif (lives == 2) then
             heart1.isVisible = true
             heart2.isVisible = true
             heart3.isVisible = false
-            heart4.isVisible = false
 
-
+        
         elseif (lives == 1) then
             heart1.isVisible = true
             heart2.isVisible = false
             heart3.isVisible = false
-            heart4.isVisible = false
 
 
         elseif (lives == 0) then
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isVisible = false
-            heart4.isVisible = false
+        
+        
 
             you_lose.isVisible = true
-            GameoverSoundChannel = audio.play(GameoverSound)
+            GameoverSoundChannel = audio.play(GameOverSound)
             lives = lives - 1
             UpdateHearts()
             clockText.isVisible = false
@@ -286,9 +261,7 @@ numericField.inputType = "default"
 -- add the event listener for the numeriuc field
 numericField:addEventListener("userInput", NumericFieldListener )
 
--- add a clock
-clockText = display.newText(secondsLeft, 100, 650, native.systemFontBold, 100)
-clockText:setFillColor( 0/255, 0/255, 153/255 )
+
 
 
 
