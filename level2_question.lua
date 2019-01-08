@@ -1,11 +1,24 @@
+
 -----------------------------------------------------------------------------------------
---
--- level1_screen.lua
--- Created by: Gil Robern
--- Modified by: Dzifa
--- Date: November 20, 2018
--- Description: This is the level 1 screen of the game.
+-- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
+
+-- Use Composer Libraries
+local composer = require( "composer" )
+local widget = require( "widget" )
+local physics = require( "physics")
+
+
+-----------------------------------------------------------------------------------------
+
+-- Naming Scene
+sceneName = "level2_question"
+
+-----------------------------------------------------------------------------------------
+
+-- Creating Scene Object
+local scene = composer.newScene( sceneName )
+
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
@@ -23,38 +36,7 @@ local GameoverSoundChannel
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
 
--------------------------------------------------------------------------------------------
- -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/Level2Screen.png")
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
 
-
-
------------------------------------------------------------------------------------------
--- INITIALIZATIONS
------------------------------------------------------------------------------------------
-
-
--- Use Composer Library
-local composer = require( "composer" )
-
------------------------------------------------------------------------------------------
-
--- Use Widget Library
-local widget = require( "widget" )
-
------------------------------------------------------------------------------------------
-
--- Naming Scene
-sceneName = "level2_screen" 
-
------------------------------------------------------------------------------------------
-
--- Creating Scene Object
-local scene = composer.newScene( sceneName )
 
 ----------------------------------------------------------------------------------------++=
 -- LOCAL VARIABLES
@@ -82,6 +64,13 @@ local numberPoints = 0
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
+
+--making transition to next scene
+local function BackToLevel1(answerIsCorrect) 
+    composer.hideOverlay("crossFade", 400 )
+  
+    ResumeGame(answerIsCorrect)
+end 
 
 
 local function UpdateHearts()
@@ -186,7 +175,7 @@ local function NumericFieldListener( event )
             -- if the users answer and the correct answer are the same:
             if (userAnswer == correctAnswer) then
                 correctObject.isVisible = true      
-                UpdateTime()
+                
 
                 correctSoundChannel = audio.play(correctSound)  
                 timer.performWithDelay(2000, HideCorrect)
@@ -213,6 +202,14 @@ end
 ---------------------------------------------------------------------
 -- OBJECT CREATION
 ---------------------------------------------------------------------
+
+
+-- Insert the background image and set it to the center of the screen
+bkg_image = display.newImage("Images/Level2Screen.png")
+bkg_image.x = display.contentCenterX
+bkg_image.y = display.contentCenterY
+bkg_image.width = display.contentWidth
+bkg_image.height = display.contentHeight
 
 -- create the lives to display on the screen
 heart1 = display.newImageRect("Images/heart.png", 100, 100)
@@ -286,6 +283,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        AskQuestion()
+
         -- play audio
         Level2SoundChannel = audio.play(Level2Sound,{ loops = -1 }) 
 
