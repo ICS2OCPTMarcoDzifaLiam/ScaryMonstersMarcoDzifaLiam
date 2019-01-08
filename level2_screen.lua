@@ -9,11 +9,12 @@
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
---Spring sound effect
-local level2sound = audio.loadSound( "Sounds/level2.mp3" )
-local level2SoundChannel
+--Level 2 sound effect
+local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
+local Level2SoundChannel 
 
------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
@@ -27,21 +28,13 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level_screen"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
-
--------------------------------------------------------------------------------------------
- -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/Level2Screen.png")
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
 
 
 
@@ -90,6 +83,14 @@ local incorrectObject
 local incorrectAnswer
 local randomOperater
 local numberPoints = 0
+
+-------------------------------------------------------------------------------------------
+ -- Insert the background image and set it to the center of the screen
+    bkg_image = display.newImage("Images/Level2Screen.png")
+    bkg_image.x = display.contentCenterX
+    bkg_image.y = display.contentCenterY
+    bkg_image.width = display.contentWidth
+    bkg_image.height = display.contentHeight
 
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
