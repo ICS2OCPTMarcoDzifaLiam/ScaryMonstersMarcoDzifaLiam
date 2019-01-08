@@ -60,11 +60,6 @@ local scene = composer.newScene( sceneName )
 -- LOCAL VARIABLES
 ----------------------------------------------------------------------------------------
 
--- variables for the timer
-local totalSeconds = 10
-local secondsLeft = 10
-local clockText
-local countDownTimer
 
 local lives = 3 
 local heart1
@@ -88,20 +83,7 @@ local numberPoints = 0
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
-local function UpdateTime()
-    -- decrement the number of seconds
-    secondsLeft = secondsLeft - 1
-
-    -- display the number of seconds left in the clock object
-    clockText.text = secondsLeft .. ""
-
-    if (secondsLeft == 0 ) then
-        -- It makes the seconds equal to the total amount of seconds left.
-        secondsLeft = totalSeconds
-        lives = lives - 1
-
-
-        -- *** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, SHOW A YOU LOSE IMAGE 
+-- *** IF THERE ARE NO LIVES LEFT, PLAY A LOSE SOUND, SHOW A YOU LOSE IMAGE 
         -- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE
         if (lives == 2) then
             heart2.isVisible = false
@@ -155,7 +137,7 @@ local function UpdateHearts()
             heart4.isVisible = false
 
             you_lose.isVisible = true
-            GameOverSoundChannel = audio.play(GameOverSound)
+            GameoverSoundChannel = audio.play(GameoverSound)
             lives = lives - 1
             UpdateHearts()
             clockText.isVisible = false
@@ -188,7 +170,7 @@ local function AskQuestion()
 
         --create question text object
         questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
-        
+
     -- If it is 3 the do subtraction
     elseif (randomOperator == 3) then
         correctAnswer = randomNumber1 * randomNumber2
