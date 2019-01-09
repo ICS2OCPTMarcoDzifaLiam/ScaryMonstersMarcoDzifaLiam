@@ -18,7 +18,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_question"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -36,8 +36,8 @@ local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
 local correctSoundChannel
 
 
-local Gameoversound = audio.loadSound( "Sounds/GameOver.mp3" )
-local GameoverSoundChannel
+local GameOverSound = audio.loadSound( "Sounds/GameOver.mp3" )
+local GameOverSoundChannel
 
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
@@ -66,17 +66,11 @@ local incorrectObject
 local incorrectAnswer
 local randomOperater
 local numberPoints = 0
-
+local sub
+local sub2
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
-
---making transition to next scene
-local function BackToLevel1(answerIsCorrect) 
-    composer.hideOverlay("crossFade", 400 )
-  
-    ResumeGame(answerIsCorrect)
-end 
 
 
 local function UpdateHearts()
@@ -107,7 +101,7 @@ local function UpdateHearts()
         
 
             you_lose.isVisible = true
-            GameoverSoundChannel = audio.play(GameOverSound)
+            GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
             lives = lives - 1
             UpdateHearts()
             incorrectObject.isVisible = false
@@ -125,6 +119,8 @@ local function AskQuestion()
     randomOperator = math.random(1,3)
     randomNumber1 = math.random(0,10)
     randomNumber2 = math.random(0,10)
+    sub = math.random(6,10)
+    sub2 = math.random(5,10)
 
     -- if the random operater is one then do addition
     if (randomOperator == 1) then
@@ -135,10 +131,10 @@ local function AskQuestion()
 
     -- If it is 2 the do subtraction
     elseif (randomOperator == 2) then
-        correctAnswer = randomNumber1 - randomNumber2
+        correctAnswer = sub - sub2
 
         --create question text object
-        questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
+        questionObject.text = sub .. " - " .. sub2 .. " = "
 
     -- If it is 3 the do subtraction
     elseif (randomOperator == 3) then
@@ -196,6 +192,8 @@ local function NumericFieldListener( event )
                 lives = lives - 1
                 UpdateHearts()  
                 timer.performWithDelay(2000, HideIncorrect)
+
+        
 
             end
 
@@ -294,7 +292,7 @@ function scene:show( event )
         Level2SoundChannel = audio.play(Level2Sound,{ loops = -1 }) 
 
         -- initialize the number of lives and number correct 
-        lives = 2
+        lives = 3
         numberCorrect = 0
     
 
@@ -306,7 +304,7 @@ end
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-
+ audio.stop(Level2Sound)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
