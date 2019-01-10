@@ -59,16 +59,6 @@ local textTouched = false
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
---making transition to next scene
-local function BackToLevel1(answerIsCorrect) 
-    composer.hideOverlay("crossFade", 400 )
-    
-    ResumeGame(answerIsCorrect)
-end 
-
-
-
-
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -76,8 +66,8 @@ local function TouchListenerAnswer(touch)
    
     if (touch.phase == "ended") then
         -- they got it right
-
-        BackToLevel1( true )
+        composer.hideOverlay("crossFade", 400 )
+        ResumeLevel3( true )
     
     end 
 end
@@ -87,8 +77,8 @@ local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
-        
-        BackToLevel1( false )
+        composer.hideOverlay("crossFade", 400 )
+        ResumeLevel3( false )
         
         
     end 
@@ -99,8 +89,8 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-
-        BackToLevel1( false )
+        composer.hideOverlay("crossFade", 400 )
+        ResumeLevel3( false )
         
     end 
 end
@@ -109,8 +99,8 @@ local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-
-        BackToLevel1( false )
+        composer.hideOverlay("crossFade", 400 )
+        ResumeLevel3( false )
         
     end 
 end
@@ -145,8 +135,8 @@ local function DisplayQuestion()
         questionText.text = firstNumber .. " + " .. secondNumber .. " ="
         -- calculate answer
         answer = firstNumber + secondNumber
-    end
-    if (randomOperator == 2) then
+
+    elseif (randomOperator == 2) then
         --creating the question depending on the selcetion number
         questionText.text = firstNumber .. " - " .. secondNumber .. " ="
         -- calculate answer
@@ -318,7 +308,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
         DisplayQuestion()
         PositionAnswers()
-        AddTextListeners()
+        AddTextListeners( )
     end
 
 end --function scene:show( event )
@@ -338,7 +328,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        --parent:resumeGame()
+        --parent:ResumeLevel3()
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
