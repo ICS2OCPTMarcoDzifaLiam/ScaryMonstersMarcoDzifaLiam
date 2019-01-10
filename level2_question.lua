@@ -65,13 +65,12 @@ local incorrectObject
 local incorrectAnswer
 local randomOperater
 local numberPoints = 0
-local sublocal sub2
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
 --making transition to next scene
-local function  BackToLevel1(answerIsCorrect) 
+local function BackToLevel1(answerIsCorrect) 
     composer.hideOverlay("crossFade", 400 )
   
     ResumeGame(answerIsCorrect)
