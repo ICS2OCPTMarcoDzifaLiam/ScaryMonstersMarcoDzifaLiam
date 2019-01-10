@@ -59,16 +59,6 @@ local textTouched = false
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
---making transition to next scene
-function ResumeLevel3Q(answerIsCorrect) 
-    composer.hideOverlay("crossFade", 400 )
-    
-    ResumeLevel3(answerIsCorrect)
-end 
-
-
-
-
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
@@ -76,7 +66,7 @@ local function TouchListenerAnswer(touch)
    
     if (touch.phase == "ended") then
         -- they got it right
-
+        composer.hideOverlay("crossFade", 400 )
         ResumeLevel3( true )
     
     end 
@@ -87,7 +77,7 @@ local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     
     if (touch.phase == "ended") then
-        
+        composer.hideOverlay("crossFade", 400 )
         ResumeLevel3( false )
         
         
@@ -99,7 +89,7 @@ local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     
     if (touch.phase == "ended") then
-
+        composer.hideOverlay("crossFade", 400 )
         ResumeLevel3( false )
         
     end 
@@ -109,7 +99,7 @@ local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     
     if (touch.phase == "ended") then
-
+        composer.hideOverlay("crossFade", 400 )
         ResumeLevel3( false )
         
     end 
@@ -145,6 +135,7 @@ local function DisplayQuestion()
         questionText.text = firstNumber .. " + " .. secondNumber .. " ="
         -- calculate answer
         answer = firstNumber + secondNumber
+
     elseif (randomOperator == 2) then
         --creating the question depending on the selcetion number
         questionText.text = firstNumber .. " - " .. secondNumber .. " ="

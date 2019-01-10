@@ -4,11 +4,6 @@
 -- Date: Month Day, Year
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
---SOUNDS
------------------------------------------------------------------------------------------
-local MainMenuSound = audio.loadSound("Sounds/MainMenu.mp3") -- setting a variable to an mp3 file
-local MainMenuSoundChannel 
 
 -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
@@ -45,25 +40,36 @@ local creditsButton
 local instructionsButton
 local muteButton
 local unMuteButton
+local audioMuted
+
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+
+local MainMenuSound = audio.loadSound("Sounds/MainMenu.mp3") -- setting a variable to an mp3 file
+local MainMenuSoundChannel 
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
--- play audio
-local function PauseAudio(touch)
-    audio.pause(MainMenuSound)
-    --audioMuted = true
-    muteButton.isVisible = false
-    unMuteButton.isVisible = true
+local function PauseAudio(touch)    
+    if (touch.phase == "ended") then
+        audio.pause(MainMenuSound)
+        audioMuted = true
+        muteButton.isVisible = false
+        unMuteButton.isVisible = true        
+    end 
 end
 
--- play audio
-local function PlayAudio(touch)
-    audio.play(MainMenuSound)
-    --audioMuted = false
-    muteButton.isVisible = true
-    unMuteButton.isVisible = false
+local function PlayAudio(touch)    
+    if (touch.phase == "ended") then
+        audio.play(MainMenuSound)
+        audioMuted = false
+        muteButton.isVisible = true
+        unMuteButton.isVisible = false        
+    end 
 end
+
 -- Creating Transition Function to Credits Page
 local function CreditsTransition( )       
     composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})
@@ -140,6 +146,7 @@ function scene:create( event )
     unMuteButton.width = 250
     unMuteButton.height = 200
     unMuteButton.isVisible = false
+
     -----------------------------------------------------------------------------------------
 
     -- Creating Credits Button
@@ -213,13 +220,16 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
-    elseif ( phase == "did" ) then  
+    elseif ( phase == "did" ) then 
+        audioMuted = false
+
+        -- play audio
+        MainMenuSoundChannel = audio.play(MainMenuSound,{ loops = -1 })   
+
         -- play audio
         muteButton:addEventListener("touch", PauseAudio)
         unMuteButton:addEventListener("touch", PlayAudio)
-
-       -- play audio
-        MainMenuSoundChannel = audio.play(MainMenuSound,{ loops = -1 })      
+           
     end
 
 end -- function scene:show( event )

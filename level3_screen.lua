@@ -48,7 +48,7 @@ local questionsAnswered = 0
 local character1
 local character2
 local character3
-local theBall
+local theCharacter
 
 local youWin
 
@@ -83,27 +83,27 @@ local GRAVITY = 1
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
-    character.xScale = 1
+    monster.xScale = 1
 end
 
 -- When up arrow is touched, add vertical so it can jump
 local function up (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY )
+    if (monster ~= nil) then
+        monster:setLinearVelocity( 0, LINEAR_VELOCITY )
     end
 end
 
 local function left (touch)
     motionx = nSPEED
-    character.xScale = -1
+    monster.xScale = -1
 end
 
--- Move character horizontally
+-- Move monster horizontally
 local function movePlayer (event)
-    character.x = character.x + motionx
+    monster.x = monster.x + motionx
 end
  
--- Stop character movement when no arrow is pushed
+-- Stop monster movement when no arrow is pushed
 local function stop (event)
     if (event.phase =="ended") then
         motionx = 0
@@ -132,22 +132,22 @@ local function RemoveRuntimeListeners()
     Runtime:removeEventListener("enterFrame", movePlayer)
     Runtime:removeEventListener("touch", stop )
 end
-local function ReplaceCharacter()
-    character = display.newImageRect("Images/Monster1.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 8
-    character.y = display.contentHeight  * 0.1 / 3
-    character.width = 75
-    character.height = 100
-    character.myName = "KickyKat"
+local function ReplaceMonster()
+    monster = display.newImageRect("Images/Monster1.png", 100, 150)
+    monster.x = display.contentWidth * 0.5 / 8
+    monster.y = display.contentHeight  * 0.1 / 3
+    monster.width = 75
+    monster.height = 100
+    monster.myName = "KickyKat"
 
-    -- intialize horizontal movement of character
+    -- intialize horizontal movement of monster
     motionx = 0
 
     -- add physics body
-    physics.addBody( character, "dynamic", { density=0, friction=0.5, bounce=0, rotation=0 } )
+    physics.addBody( monster, "dynamic", { density=0, friction=0.5, bounce=0, rotation=0 } )
 
-    -- prevent character from being able to tip over
-    character.isFixedRotation = true
+    -- prevent monster from being able to tip over
+    monster.isFixedRotation = true
 
     -- add back arrow listeners
     AddArrowEventListeners()
@@ -171,63 +171,22 @@ local function onCollision( self, event )
     --print( event.otherElement )  --the element (number) of the second object which was hit in the collision
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
     if ( event.phase == "began" ) then
-
-        --Pop sound
-        print ("***Collided with something")
-        
---[[
-        if  (event.target.myName == "spikes1") or 
-            (event.target.myName == "spikes2") or
-            (event.target.myName == "spikes3") then
-            popSoundChannel = audio.play(popSound)
-
-            -- add sound effect here
-            -- show overlay with math question
-            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
-
-            -- remove runtime listeners that move the character
-            RemoveArrowEventListeners()
-            RemoveRuntimeListeners()
-
-            -- remove the character from the display
-            character.isVisible = false
-
-            -- decrease number of lives
-            --numLives = numLives - 1
-
-            if (numLives == 1) then
-                -- update hearts
-                --heart1.isVisible = true
-                --heart2.isVisible = false
-                --timer.performWithDelay(200, ReplaceCharacter) 
-                character.isVisible = true
-
-            elseif (numLives == 0) then
-                -- update hearts
-                --heart1.isVisible = false
-                --heart2.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
-            end
-        end
-        ]]--
+ 
     
         if  (event.target.myName == "character1") or
             (event.target.myName == "character2") or
-            (event.target.myName == "character3") or
-            (event.target.myName == "spikes1") or 
-            (event.target.myName == "spikes2") or
-            (event.target.myName == "spikes3") then
+            (event.target.myName == "character3")  then
 
-            print  ("***Hit the ball or spikes")
+            print  ("***Hit the character")
 
-            -- get the ball that the user hit
-            theBall = event.target
+            -- get the monster that the user hit
+            theCharacter = event.target
 
-            -- stop the character from moving
+            -- stop the monster from moving
             motionx = 0
 
-            -- make the character invisible
-            character.isVisible = false
+            -- make the monster invisible
+            monster.isVisible = false
 
             -- show overlay with math question
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
@@ -235,29 +194,38 @@ local function onCollision( self, event )
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
             print ("***questionsAnswered = " .. questionsAnswered)  
-        end     
+        end    
+
+        if  (event.target.myName == "spikes1") or 
+            (event.target.myName == "spikes2") or
+            (event.target.myName == "spikes3") then
+
+            print  ("***Hit the spikes")
+            
+
+            -- stop the monster from moving
+            motionx = 0
+
+            -- make the monster invisible
+            monster.isVisible = false
+
+            -- show overlay with math question
+            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+
+            -- Increment questions answered
+            questionsAnswered = questionsAnswered + 1
+            print ("***questionsAnswered = " .. questionsAnswered)  
+        end   
      
-
-        --if (event.target.myName == "door") then
-        --    --check to see if the user has answered 5 questions
-        --    print ("***Hit Door: questionsAnswered = " .. questionsAnswered)
-
-        --    if (questionsAnswered == 3) then
-        --        youWin.isVisible = true
-        --        character.isVisible = false
-        --        --youWinSoundChannel = audio.play(youWinSound)
-        --        -- after getting 3 questions right, go to the you win screen
-        --    end
-        --end       
     end        
 end
 
 local function DisplayCharecter()
-    character.isVisible = true
+    monster.isVisible = true
 end
 
 local function AddCollisionListeners()
-    -- if character collides with ball, onCollision will be called
+    -- if monster collides with ball, onCollision will be called
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
     spikes2.collision = onCollision
@@ -265,7 +233,7 @@ local function AddCollisionListeners()
     spikes3.collision = onCollision
     spikes3:addEventListener( "collision" )
 
-    -- if character collides with ball, onCollision will be called    
+    -- if monster collides with character, onCollision will be called    
     character1.collision = onCollision
     character1:addEventListener( "collision" )
     character2.collision = onCollision
@@ -351,19 +319,20 @@ function ResumeLevel3(answerIsCorrect)
         correctObject.isVisible = true
         --correctSoundChannel = audio.play(correctSound)
         timer.performWithDelay(2000, HideCorrect)
-        timer.performWithDelay(1, DisplayCharecter)
     else
         incorrectObject.isVisible = true
         --incorrectSoundChannel = audio.play(incorrectSound)
         --event.target.text = ""
         timer.performWithDelay(2000, HideIncorrect)
-        timer.performWithDelay(1, DisplayCharecter)
     end 
     
+    -- make the monster visible again
+    monster.isVisible = true
+    
     if (questionsAnswered > 0) then
-        if (theBall ~= nil) and (theBall.isBodyActive == true) then
-            physics.removeBody(theBall)
-            theBall.isVisible = false
+        if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
+            physics.removeBody(theCharacter)
+            theCharacter.isVisible = false
         end
     end
 
@@ -434,14 +403,14 @@ function scene:create( event )
         
     sceneGroup:insert( platform4 )
 
-    spikes1 = display.newImageRect("Images/Spikes.png", 300, 250)
-    spikes1.x = display.contentWidth * 2.5 / 8
+    spikes1 = display.newImageRect("Images/Spikes.png", 50, 200)
+    spikes1.x = display.contentWidth * 2.7 / 8
     spikes1.y = display.contentHeight * 1.8 / 5
     spikes1.myName = "spikes1"
         
     sceneGroup:insert( spikes1)
 
-    spikes2 = display.newImageRect("Images/Spikes.png", 300, 250)
+    spikes2 = display.newImageRect("Images/Spike2.png", 300, 50)
     spikes2.x = display.contentWidth * 5 / 8
     spikes2.y = display.contentHeight * 2.7 / 5
     spikes2.myName = "spikes2"
@@ -449,7 +418,7 @@ function scene:create( event )
     sceneGroup:insert( spikes2)
 
 
-    spikes3 = display.newImageRect("Images/Spikes.png", 300, 250)
+    spikes3 = display.newImageRect("Images/Spike3.png", 300, 50)
     spikes3.x = display.contentWidth * 5.5 / 8
     spikes3.y = display.contentHeight * 0.4 / 5
     spikes3.myName = "spikes3"
@@ -550,7 +519,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        ReplaceCharacter()
+        ReplaceMonster()
         AddCollisionListeners()
     end
 
