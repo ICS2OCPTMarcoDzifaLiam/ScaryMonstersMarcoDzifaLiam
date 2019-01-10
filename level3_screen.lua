@@ -45,12 +45,16 @@ local lArrow
 
 local questionsAnswered = 0
 
-local ball1
-local ball2
-local ball3
+local character1
+local character2
+local character3
 local theBall
 
 local youWin
+
+local spikes1
+local spikes2
+local spikes3
 
 local correctObject
 local incorrectObject
@@ -105,9 +109,7 @@ local function stop (event)
         motionx = 0
     end
 end
-local function GoToLevel2()
-    composer.gotoScene( "level2_screen" )
-end
+
 
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
@@ -155,9 +157,9 @@ local function ReplaceCharacter()
 end
 
 local function MakeSoccerBallsVisible()
-    ball1.isVisible = true
-    ball2.isVisible = true
-    ball3.isVisible = true
+    character1.isVisible = true
+    character2.isVisible = true
+    character3.isVisible = true
 
 end
 
@@ -171,12 +173,14 @@ local function onCollision( self, event )
     if ( event.phase == "began" ) then
 
         --Pop sound
+        print ("***Collided with something")
         
-
+--[[
         if  (event.target.myName == "spikes1") or 
             (event.target.myName == "spikes2") or
             (event.target.myName == "spikes3") then
             popSoundChannel = audio.play(popSound)
+
             -- add sound effect here
             -- show overlay with math question
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
@@ -195,7 +199,8 @@ local function onCollision( self, event )
                 -- update hearts
                 --heart1.isVisible = true
                 --heart2.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
+                --timer.performWithDelay(200, ReplaceCharacter) 
+                character.isVisible = true
 
             elseif (numLives == 0) then
                 -- update hearts
@@ -204,46 +209,53 @@ local function onCollision( self, event )
                 timer.performWithDelay(200, YouLoseTransition)
             end
         end
-    end
-    if  (event.target.myName == "ball1") or
-        (event.target.myName == "ball2") or
-        (event.target.myName == "ball3") then
+        ]]--
+    
+        if  (event.target.myName == "character1") or
+            (event.target.myName == "character2") or
+            (event.target.myName == "character3") or
+            (event.target.myName == "spikes1") or 
+            (event.target.myName == "spikes2") or
+            (event.target.myName == "spikes3") then
 
-        print  ("***Hit the ball")
+            print  ("***Hit the ball or spikes")
 
-        -- get the ball that the user hit
-        theBall = event.target
+            -- get the ball that the user hit
+            theBall = event.target
 
-        -- stop the character from moving
-        motionx = 0
+            -- stop the character from moving
+            motionx = 0
 
-        -- make the character invisible
-        character.isVisible = false
-
-        -- show overlay with math question
-        composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
-
-        -- Increment questions answered
-        questionsAnswered = questionsAnswered + 1
-        print ("***questionsAnswered = " .. questionsAnswered)       
-    end 
-
-    if (event.target.myName == "door") then
-        --check to see if the user has answered 5 questions
-        print ("***Hit Door: questionsAnswered = " .. questionsAnswered)
-
-        if (questionsAnswered == 3) then
-            youWin.isVisible = true
+            -- make the character invisible
             character.isVisible = false
-            timer.performWithDelay(2000, GoToLevel2)
-            --youWinSoundChannel = audio.play(youWinSound)
-            -- after getting 3 questions right, go to the you win screen
-        end       
+
+            -- show overlay with math question
+            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+
+            -- Increment questions answered
+            questionsAnswered = questionsAnswered + 1
+            print ("***questionsAnswered = " .. questionsAnswered)  
+        end     
+     
+
+        --if (event.target.myName == "door") then
+        --    --check to see if the user has answered 5 questions
+        --    print ("***Hit Door: questionsAnswered = " .. questionsAnswered)
+
+        --    if (questionsAnswered == 3) then
+        --        youWin.isVisible = true
+        --        character.isVisible = false
+        --        --youWinSoundChannel = audio.play(youWinSound)
+        --        -- after getting 3 questions right, go to the you win screen
+        --    end
+        --end       
     end        
 end
+
 local function DisplayCharecter()
     character.isVisible = true
 end
+
 local function AddCollisionListeners()
     -- if character collides with ball, onCollision will be called
     spikes1.collision = onCollision
@@ -254,15 +266,15 @@ local function AddCollisionListeners()
     spikes3:addEventListener( "collision" )
 
     -- if character collides with ball, onCollision will be called    
-    ball1.collision = onCollision
-    ball1:addEventListener( "collision" )
-    ball2.collision = onCollision
-    ball2:addEventListener( "collision" )
-    ball3.collision = onCollision
-    ball3:addEventListener( "collision" )
+    character1.collision = onCollision
+    character1:addEventListener( "collision" )
+    character2.collision = onCollision
+    character2:addEventListener( "collision" )
+    character3.collision = onCollision
+    character3:addEventListener( "collision" )
 
-    door.collision = onCollision
-    door:addEventListener( "collision" )
+    --door.collision = onCollision
+    --door:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -270,11 +282,11 @@ local function RemoveCollisionListeners()
     spikes2:removeEventListener( "collision" )
     spikes3:removeEventListener( "collision" )
 
-    ball1:removeEventListener( "collision" )
-    ball2:removeEventListener( "collision" )
-    ball3:removeEventListener( "collision" )
+    character1:removeEventListener( "collision" )
+    character2:removeEventListener( "collision" )
+    character3:removeEventListener( "collision" )
 
-    door:removeEventListener( "collision")
+    --door:removeEventListener( "collision")
 end
 
 local function AddPhysicsBodies()
@@ -282,10 +294,6 @@ local function AddPhysicsBodies()
     physics.addBody( spikes1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes3, "static", { density=1.0, friction=0.3, bounce=0.2 } )    
-
-    physics.addBody( spikes1platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( spikes2platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( spikes3platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
@@ -300,11 +308,11 @@ local function AddPhysicsBodies()
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
-    physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(ball3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(character1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(character2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(character3, "static",  {density=0, friction=0, bounce=0} )
 
-    physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
+    --physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
 end
 
 local function RemovePhysicsBodies()
@@ -315,10 +323,6 @@ local function RemovePhysicsBodies()
     physics.removeBody(spikes1)
     physics.removeBody(spikes2)
     physics.removeBody(spikes3)
-
-    physics.removeBody(spikes1platform)
-    physics.removeBody(spikes2platform)
-    physics.removeBody(spikes3platform)
 
     physics.removeBody(leftW)
     physics.removeBody(rightW)
@@ -341,7 +345,7 @@ end
 -----------------------------------------------------------------------------------------
 
 
-function ResumeGame(answerIsCorrect)
+function ResumeLevel3(answerIsCorrect)
 
     if (answerIsCorrect == true) then
         correctObject.isVisible = true
@@ -352,7 +356,7 @@ function ResumeGame(answerIsCorrect)
         incorrectObject.isVisible = true
         --incorrectSoundChannel = audio.play(incorrectSound)
         --event.target.text = ""
-        timer.performWithDelay(500, HideIncorrect)
+        timer.performWithDelay(2000, HideIncorrect)
         timer.performWithDelay(1, DisplayCharecter)
     end 
     
@@ -377,7 +381,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level1ScreenMarcoS@2x.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/level3screenMarco.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -420,7 +424,7 @@ function scene:create( event )
 
     platform3 = display.newImageRect("Images/Platform.png", 180, 50)
     platform3.x = display.contentWidth *1 / 5
-    platform3.y = display.contentHeight * 3.5 / 5
+    platform3.y = display.contentHeight * 2.5 / 5
         
     sceneGroup:insert( platform3 )
 
@@ -430,52 +434,36 @@ function scene:create( event )
         
     sceneGroup:insert( platform4 )
 
-    spikes1 = display.newImageRect("Images/Level-1Spikes1.png", 250, 50)
-    spikes1.x = display.contentWidth * 3 / 8
-    spikes1.y = display.contentHeight * 3.8 / 5
+    spikes1 = display.newImageRect("Images/Spikes.png", 300, 250)
+    spikes1.x = display.contentWidth * 2.5 / 8
+    spikes1.y = display.contentHeight * 1.8 / 5
     spikes1.myName = "spikes1"
         
     sceneGroup:insert( spikes1)
 
-    spikes1platform = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
-    spikes1platform.x = display.contentWidth * 3 / 8
-    spikes1platform.y = display.contentHeight * 4.1 / 5
-        
-    sceneGroup:insert( spikes1platform)
-
-    spikes2 = display.newImageRect("Images/Level-1Spikes2.png", 150, 50)
+    spikes2 = display.newImageRect("Images/Spikes.png", 300, 250)
     spikes2.x = display.contentWidth * 5 / 8
-    spikes2.y = display.contentHeight * 2.2 / 5
+    spikes2.y = display.contentHeight * 2.7 / 5
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
 
-    spikes2platform = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
-    spikes2platform.x = display.contentWidth * 5 / 8
-    spikes2platform.y = display.contentHeight * 1.9 / 5
-        
-    sceneGroup:insert( spikes2platform)
 
-    spikes3 = display.newImageRect("Images/Level-1Spikes3.png", 50, 150)
+    spikes3 = display.newImageRect("Images/Spikes.png", 300, 250)
     spikes3.x = display.contentWidth * 5.5 / 8
     spikes3.y = display.contentHeight * 0.4 / 5
     spikes3.myName = "spikes3"
         
     sceneGroup:insert( spikes3)
 
-    spikes3platform = display.newImageRect("Images/Level-1Platform2.png", 50, 150)
-    spikes3platform.x = display.contentWidth * 5.8 / 8
-    spikes3platform.y = display.contentHeight * 0.4 / 5
-        
-    sceneGroup:insert( spikes3platform)
 
-    door = display.newImage("Images/Level-1Door.png", 200, 200)
-    door.x = display.contentWidth/2.15 
-    door.y = display.contentHeight* 1 / 1.9
-    door.myName = "door"
-    door.isVisible = false
-
-    sceneGroup:insert( door )
+    --door = display.newImage("Images/Level-1Door.png", 200, 200)
+    --door.x = display.contentWidth/2.15 
+    --door.y = display.contentHeight* 1 / 1.9
+    --door.myName = "door"
+    --door.isVisible = false
+--
+    --sceneGroup:insert( door )
     -- Inserting left and right walls and there visibility
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
     sceneGroup:insert( leftW )
@@ -510,31 +498,31 @@ function scene:create( event )
     incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/4, nil, 50)
     incorrectObject:setTextColor(0/255, 0/255, 200/255)
     incorrectObject.isVisible = false
-    --ball1
-    ball1 = display.newImageRect ("Images/Character1.png", 70, 70)
-    ball1.x = 840
-    ball1.y = 355
-    ball1.myName = "ball1"
+    --charecter1
+    character1 = display.newImageRect ("Images/Character1.png", 70, 70)
+    character1.x = 840
+    character1.y = 355
+    character1.myName = "character1"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball1 )
+    sceneGroup:insert( character1 )
 
-    --ball2
-    ball2 = display.newImageRect ("Images/Character2.png", 70, 70)
-    ball2.x = 490
-    ball2.y = 170
-    ball2.myName = "ball2"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball2 )
-
-    ball3 = display.newImageRect ("Images/Character3.png", 70, 70)
-    ball3.x = 200
-    ball3.y = 480
-    ball3.myName = "ball3"
+    --character2
+    character2 = display.newImageRect ("Images/Character2.png", 70, 70)
+    character2.x = 490
+    character2.y = 170
+    character2.myName = "character2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball3 )            
+    sceneGroup:insert( character2 )
+
+    character3 = display.newImageRect ("Images/Character3.png", 70, 70)
+    character3.x = 200
+    character3.y = 325
+    character3.myName = "character3"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( character3 )            
 
 end --function scene:create( event )
 
@@ -555,7 +543,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-         Level1ScreenSoundChannel = audio.play(Level1ScreenSound)
+        
+        Level1ScreenSoundChannel = audio.play(Level1ScreenSound)
 
         AddPhysicsBodies()
         -- Called when the scene is now on screen.
@@ -571,7 +560,7 @@ end --function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
- audio.stop(Level1Screen)
+ 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
@@ -589,6 +578,7 @@ function scene:hide( event )
         -- Called immediately after scene goes off screen.
         RemoveArrowEventListeners()
         RemoveCollisionListeners()
+        audio.stop(Level1Screen)
     end
 
 end --function scene:hide( event )

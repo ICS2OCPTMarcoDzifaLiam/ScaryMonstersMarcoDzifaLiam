@@ -63,7 +63,7 @@ local textTouched = false
 local function BackToLevel1(answerIsCorrect) 
     composer.hideOverlay("crossFade", 400 )
   
-    ResumeGame(answerIsCorrect)
+    ResumeLevel1(answerIsCorrect)
 end 
 
 
@@ -325,7 +325,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        --parent:resumeGame()
+        --parent:ResumeLevel1()
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then

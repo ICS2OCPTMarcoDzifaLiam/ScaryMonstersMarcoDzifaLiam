@@ -46,9 +46,9 @@ local lArrow
 
 local questionsAnswered = 0
 
-local ball1
-local ball2
-local ball3
+local character1
+local character2
+local character3
 local theBall
 
 local youWin
@@ -95,6 +95,9 @@ local function left (touch)
     character.xScale = -1
 end
 
+local function GoToLevel2()
+    composer.gotoScene( "level2_screen" )
+end
 -- Move character horizontally
 local function movePlayer (event)
     character.x = character.x + motionx
@@ -153,9 +156,9 @@ local function ReplaceCharacter()
 end
 
 local function MakeSoccerBallsVisible()
-    ball1.isVisible = true
-    ball2.isVisible = true
-    ball3.isVisible = true
+    character1.isVisible = true
+    character2.isVisible = true
+    character3.isVisible = true
 
 end
 
@@ -167,9 +170,9 @@ local function onCollision( self, event )
     --print( event.otherElement )  --the element (number) of the second object which was hit in the collision
     --print( event.target.myName .. ": collision began with " .. event.other.myName )
 
-    if  (event.target.myName == "ball1") or
-        (event.target.myName == "ball2") or
-        (event.target.myName == "ball3") then
+    if  (event.target.myName == "character1") or
+        (event.target.myName == "character2") or
+        (event.target.myName == "character3") then
 
         print  ("***Hit the ball")
 
@@ -197,6 +200,7 @@ local function onCollision( self, event )
         if (questionsAnswered == 3) then
             youWin.isVisible = true
             character.isVisible = false
+            timer.performWithDelay(2000, GoToLevel2)
             --youWinSoundChannel = audio.play(youWinSound)
             -- after getting 3 questions right, go to the you win screen
         end       
@@ -208,12 +212,12 @@ local function AddCollisionListeners()
     
 
     -- if character collides with ball, onCollision will be called    
-    ball1.collision = onCollision
-    ball1:addEventListener( "collision" )
-    ball2.collision = onCollision
-    ball2:addEventListener( "collision" )
-    ball3.collision = onCollision
-    ball3:addEventListener( "collision" )
+    character1.collision = onCollision
+    character1:addEventListener( "collision" )
+    character2.collision = onCollision
+    character2:addEventListener( "collision" )
+    character3.collision = onCollision
+    character3:addEventListener( "collision" )
 
     door.collision = onCollision
     door:addEventListener( "collision" )
@@ -221,9 +225,9 @@ end
 
 local function RemoveCollisionListeners()
 
-    ball1:removeEventListener( "collision" )
-    ball2:removeEventListener( "collision" )
-    ball3:removeEventListener( "collision" )
+    character1:removeEventListener( "collision" )
+    character2:removeEventListener( "collision" )
+    character3:removeEventListener( "collision" )
 
     door:removeEventListener( "collision")
 end
@@ -243,9 +247,9 @@ local function AddPhysicsBodies()
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
-    physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(ball3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(character1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(character2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(character3, "static",  {density=0, friction=0, bounce=0} )
 
     physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
 end
@@ -284,7 +288,7 @@ end
 -----------------------------------------------------------------------------------------
 
 
-function ResumeGame(answerIsCorrect)
+function ResumeLevel1(answerIsCorrect)
 
     if (answerIsCorrect == true) then
         correctObject.isVisible = true
@@ -414,31 +418,31 @@ function scene:create( event )
     incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/4, nil, 50)
     incorrectObject:setTextColor(0/255, 0/255, 200/255)
     incorrectObject.isVisible = false
-    --ball1
-    ball1 = display.newImageRect ("Images/Character1.png", 70, 70)
-    ball1.x = 840
-    ball1.y = 355
-    ball1.myName = "ball1"
+    --character1
+    character1 = display.newImageRect ("Images/Character1.png", 70, 70)
+    character1.x = 840
+    character1.y = 355
+    character1.myName = "character1"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball1 )
+    sceneGroup:insert( character1 )
 
-    --ball2
-    ball2 = display.newImageRect ("Images/Character2.png", 70, 70)
-    ball2.x = 490
-    ball2.y = 170
-    ball2.myName = "ball2"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball2 )
-
-    ball3 = display.newImageRect ("Images/Character3.png", 70, 70)
-    ball3.x = 200
-    ball3.y = 480
-    ball3.myName = "ball3"
+    --character2
+    character2 = display.newImageRect ("Images/Character2.png", 70, 70)
+    character2.x = 490
+    character2.y = 170
+    character2.myName = "character2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball3 )            
+    sceneGroup:insert( character2 )
+
+    character3 = display.newImageRect ("Images/Character3.png", 70, 70)
+    character3.x = 200
+    character3.y = 480
+    character3.myName = "character3"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( character3 )            
 
 end --function scene:create( event )
 

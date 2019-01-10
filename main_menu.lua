@@ -52,7 +52,7 @@ local unMuteButton
 -- play audio
 local function PauseAudio(touch)
     audio.pause(MainMenuSound)
-    audioMuted = true
+    --audioMuted = true
     muteButton.isVisible = false
     unMuteButton.isVisible = true
 end
@@ -60,7 +60,7 @@ end
 -- play audio
 local function PlayAudio(touch)
     audio.play(MainMenuSound)
-    audioMuted = false
+    --audioMuted = false
     muteButton.isVisible = true
     unMuteButton.isVisible = false
 end

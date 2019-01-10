@@ -60,10 +60,10 @@ local textTouched = false
 -----------------------------------------------------------------------------------------
 
 --making transition to next scene
-local function BackToLevel1(answerIsCorrect) 
+function ResumeLevel3Q(answerIsCorrect) 
     composer.hideOverlay("crossFade", 400 )
     
-    ResumeGame(answerIsCorrect)
+    ResumeLevel3(answerIsCorrect)
 end 
 
 
@@ -77,7 +77,7 @@ local function TouchListenerAnswer(touch)
     if (touch.phase == "ended") then
         -- they got it right
 
-        BackToLevel1( true )
+        ResumeLevel3( true )
     
     end 
 end
@@ -88,7 +88,7 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         
-        BackToLevel1( false )
+        ResumeLevel3( false )
         
         
     end 
@@ -100,7 +100,7 @@ local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
 
-        BackToLevel1( false )
+        ResumeLevel3( false )
         
     end 
 end
@@ -110,7 +110,7 @@ local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
 
-        BackToLevel1( false )
+        ResumeLevel3( false )
         
     end 
 end
@@ -145,8 +145,7 @@ local function DisplayQuestion()
         questionText.text = firstNumber .. " + " .. secondNumber .. " ="
         -- calculate answer
         answer = firstNumber + secondNumber
-    end
-    if (randomOperator == 2) then
+    elseif (randomOperator == 2) then
         --creating the question depending on the selcetion number
         questionText.text = firstNumber .. " - " .. secondNumber .. " ="
         -- calculate answer
@@ -318,7 +317,7 @@ function scene:show( event )
         -- Example: start timers, begin animation, play audio, etc.
         DisplayQuestion()
         PositionAnswers()
-        AddTextListeners()
+        AddTextListeners( )
     end
 
 end --function scene:show( event )
@@ -338,7 +337,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        --parent:resumeGame()
+        --parent:ResumeLevel3()
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
