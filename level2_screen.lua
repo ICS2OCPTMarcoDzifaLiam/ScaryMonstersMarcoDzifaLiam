@@ -42,6 +42,9 @@ local GameOverSoundChannel
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
 
+local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
+local youwinSoundChannel 
+
 
 
 ----------------------------------------------------------------------------------------++=
@@ -71,6 +74,24 @@ local sub2
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
+
+local function CheckPoints()
+        -- monitor points till they reach 5
+    if (numberCorrect == 5) then
+
+        -- display the you win screen
+        composer.gotoScene("YouWin")
+
+        --play you win sound
+       youwinSoundChannel = audio.play(youwinSound)
+
+        --stop bkg music
+        audio.stop(youwinSoundChannel)
+
+        
+    end
+end
+
 
 
 local function UpdateHearts()
@@ -112,6 +133,13 @@ local function UpdateHearts()
             questionObject.isVisible = false
         end
 end
+
+local function WinScreenTransition( )        
+    composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
+end 
+
+
+
 
 
 local function AskQuestion()
@@ -181,6 +209,7 @@ local function NumericFieldListener( event )
                 correctSoundChannel = audio.play(correctSound)  
                 timer.performWithDelay(2000, HideCorrect)
                 numberPoints = numberPoints + 1
+                CheckPoints()
 
                     -- create increasing points in the text object
                 pointsTextObject.text = "Points = ".. numberPoints
