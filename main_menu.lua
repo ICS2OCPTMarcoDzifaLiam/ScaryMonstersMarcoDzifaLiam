@@ -133,7 +133,7 @@ function scene:create( event )
             onRelease = Level1ScreenTransition 
         } )
 
-    muteButton = display.newImage("Images/MuteButtonUnPressedMarcoS@2x.png")
+    muteButton = display.newImage("Images/MuteButtonUnpressedMarcoS@2x.png")
     muteButton.x = display.contentWidth*7/8
     muteButton.y = display.contentHeight*1/8
     muteButton.width = 250
