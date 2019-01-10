@@ -18,7 +18,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_screen"
+sceneName = "level2_question"
 
 -----------------------------------------------------------------------------------------
 
@@ -35,15 +35,11 @@ local wrongSoundChannel
 local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
 local correctSoundChannel
 
-
 local GameOverSound = audio.loadSound( "Sounds/GameOver.mp3" )
 local GameOverSoundChannel
 
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
-
-local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
-local youwinSoundChannel 
 
 
 
@@ -69,63 +65,17 @@ local incorrectObject
 local incorrectAnswer
 local randomOperater
 local numberPoints = 0
-local sub
-local sub2
+local sublocal sub2
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
-local function WinScreenTransition( )        
-    composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
+--making transition to next scene
+local function  BackToLevel1(answerIsCorrect) 
+    composer.hideOverlay("crossFade", 400 )
+  
+    ResumeGame(answerIsCorrect)
 end 
-
-local function RestartScene()
-
-    alreadyClickedAnswer = false
-    correct.isVisible = false
-    incorrect.isVisible = false
-
-    livesText.text = "Number of lives = " .. tostring(lives)
-    numberCorrectText.text = "NumberCorrect = " .. tostring(numberPoints)
-
-    -- if they have 0 lives, go to the You Lose screen
-    if (lives == 0) then
-        composer.gotoScene("you_lose")
-
-        GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
-        audio.stop(GameOverSound)
-
-
-    elseif
-        (Correct == 5) then
-        composer.gotoScene("YouWin")
-
-
-    else 
-
-        DisplayAddEquation()
-        DetermineAnswers()
-        DisplayAnswers()
-    end
-end
-
-local function CheckPoints()
-        -- monitor points till they reach 5
-    if (numberCorrect == 5) then
-
-        -- display the you win screen
-        composer.gotoScene("YouWin")
-
-        --play you win sound
-       youwinSoundChannel = audio.play(youwinSound)
-
-        --stop bkg music
-        audio.stop(youwinSoundChannel)
-
-        
-    end
-end
-
 
 
 local function UpdateHearts()
@@ -156,7 +106,7 @@ local function UpdateHearts()
         
 
             you_lose.isVisible = true
-            GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
+            GameOverSoundChannel = audio.play(GameOverSound)
             lives = lives - 1
             UpdateHearts()
             incorrectObject.isVisible = false
@@ -167,11 +117,6 @@ local function UpdateHearts()
             questionObject.isVisible = false
         end
 end
-
-
-
-
-
 
 
 local function AskQuestion()
@@ -241,7 +186,6 @@ local function NumericFieldListener( event )
                 correctSoundChannel = audio.play(correctSound)  
                 timer.performWithDelay(2000, HideCorrect)
                 numberPoints = numberPoints + 1
-                CheckPoints()
 
                     -- create increasing points in the text object
                 pointsTextObject.text = "Points = ".. numberPoints
@@ -253,8 +197,6 @@ local function NumericFieldListener( event )
                 lives = lives - 1
                 UpdateHearts()  
                 timer.performWithDelay(2000, HideIncorrect)
-
-        
 
             end
 
@@ -353,7 +295,7 @@ function scene:show( event )
         Level2SoundChannel = audio.play(Level2Sound,{ loops = -1 }) 
 
         -- initialize the number of lives and number correct 
-        lives = 3
+        lives = 2
         numberCorrect = 0
     
 
@@ -365,7 +307,7 @@ end
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
- audio.stop(Level2Sound)
+
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
