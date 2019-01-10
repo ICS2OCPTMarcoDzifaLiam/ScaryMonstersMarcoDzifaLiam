@@ -75,6 +75,40 @@ local sub2
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
+local function WinScreenTransition( )        
+    composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
+end 
+
+local function RestartScene()
+
+    alreadyClickedAnswer = false
+    correct.isVisible = false
+    incorrect.isVisible = false
+
+    livesText.text = "Number of lives = " .. tostring(lives)
+    numberCorrectText.text = "NumberCorrect = " .. tostring(numberPoints)
+
+    -- if they have 0 lives, go to the You Lose screen
+    if (lives == 0) then
+        composer.gotoScene("you_lose")
+
+        GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
+        audio.stop(GameOverSound)
+
+
+    elseif
+        (Correct == 5) then
+        composer.gotoScene("YouWin")
+
+
+    else 
+
+        DisplayAddEquation()
+        DetermineAnswers()
+        DisplayAnswers()
+    end
+end
+
 local function CheckPoints()
         -- monitor points till they reach 5
     if (numberCorrect == 5) then
@@ -134,9 +168,7 @@ local function UpdateHearts()
         end
 end
 
-local function WinScreenTransition( )        
-    composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
-end 
+
 
 
 
