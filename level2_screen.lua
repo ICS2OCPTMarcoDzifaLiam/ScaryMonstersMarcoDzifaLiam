@@ -1,10 +1,5 @@
 
------------------------------------------------------------------------------------------
---SOUNDS
------------------------------------------------------------------------------------------
 
-local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
-local Level2SoundChannel 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -45,8 +40,6 @@ local Level2SoundChannel
 local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
 local youwinSoundChannel 
 
-
-
 ----------------------------------------------------------------------------------------++=
 -- LOCAL VARIABLES
 ----------------------------------------------------------------------------------------
@@ -84,9 +77,6 @@ local function RestartScene()
     alreadyClickedAnswer = false
     correct.isVisible = false
     incorrect.isVisible = false
-
-    livesText.text = "Number of lives = " .. tostring(lives)
-    numberCorrectText.text = "NumberCorrect = " .. tostring(numberPoints)
 
     -- if they have 0 lives, go to the You Lose screen
     if (lives == 0) then
@@ -378,9 +368,6 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        
-        -- remove the listeners when leaving the scene
-        RemoveTextObjectListeners()
 
     -----------------------------------------------------------------------------------------
 
