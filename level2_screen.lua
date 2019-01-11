@@ -30,10 +30,6 @@ local wrongSoundChannel
 local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
 local correctSoundChannel
 
-
-local GameOverSound = audio.loadSound( "Sounds/GameOver.mp3" )
-local GameOverSoundChannel
-
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
 
@@ -280,10 +276,6 @@ heart3.y = display.contentHeight * 1 / 7
 
 
 
-you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, display.contentHeight)
-you_lose.anchorX = 0
-you_lose.anchorY = 0
-you_lose.isVisible = false
 
 -- display a question and sets the colour 
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/1.5, nil, 70 )
