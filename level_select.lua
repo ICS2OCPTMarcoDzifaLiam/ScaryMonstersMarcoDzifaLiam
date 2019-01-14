@@ -2,11 +2,13 @@
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
--- Use Composer Libraries
+-- Use Composer Library
 local composer = require( "composer" )
-local widget = require( "widget" )
-local physics = require( "physics")
 
+-----------------------------------------------------------------------------------------
+
+-- Use Widget Library
+local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
@@ -18,12 +20,18 @@ sceneName = "level_select"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
+
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+
+
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-local level1
-local level2
-local level3
+local level1Button
+local level2Button
+local level3Button
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -37,9 +45,10 @@ local sceneGroup = self.view
 
 -----------------------------------------------------------------------------------------
 
-local function level1ScreenTransition( )        
+-- Creating Transition to Level1 Screen
+local function Level1ScreenTransition( )
     composer.gotoScene( "level1_screen", {effect = "zoomInOutFade", time = 1000})
-end 
+end    
 
 local function level2ScreenTransition( )        
     composer.gotoScene( "level2_screen", {effect = "zoomInOutFade", time = 1000})
@@ -49,29 +58,76 @@ local function level3ScreenTransition( )
     composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 1000})
 end 
 
+ -----------------------------------------------------------------------------------------
+-- BACKGROUND IMAGE 
+-----------------------------------------------------------------------------------------
 
--- create level1, set its position and make it visible
-local level1 = display.newImageRect("Images/level1.png", 198, 96)
-level1.x = display.contentWidth/2
-level1.y = display.contentHeight/2
-level1.isVisible = true
+-- Insert the background image and set it to the center of the screen
+    bkg_image = display.newImage("Images/RainbowBackground@2x.png")
+    bkg_image.x = display.contentCenterX
+    bkg_image.y = display.contentCenterY
+    bkg_image.width = display.contentWidth
+    bkg_image.height = display.contentHeight
 
--- create level2, set its position and make it visible
-local level2 = display.newImageRect("Images/level2.png", 198, 96)
-level2.x = display.contentWidth/2
-level2.y = display.contentHeight/2
-level2.isVisible = true
+ -- Creating level1 Button
+    level1Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth/2,
+            y = display.contentHeight*7/8,
+            width = 250,
+            height = 200,
 
--- create level3, set its position and make it visible
-local level3 = display.newImageRect("Images/level3.png", 198, 96)
-level3.x = display.contentWidth/2
-level3.y = display.contentHeight/2
-level3.isVisible = true
+            -- Insert the images here
+            defaultFile = "Images/level1.png",
+            overFile = "Images/level1.png",
 
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert(level1_screen) 
-    sceneGroup:insert(level2_screen)  
-    sceneGroup:insert(level3_screen)         
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level1ScreenTransition 
+        } )
+
+
+ -- Creating level 2 Button
+    level2Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth/2,
+            y = display.contentHeight*7/8,
+            width = 250,
+            height = 200,
+
+            -- Insert the images here
+            defaultFile = "Images/level2.png",
+            overFile = "Images/level2.png",
+
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level2ScreenTransition
+        } )
+
+ -- Creating level Button
+    level3Button = widget.newButton( 
+        {   
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth/2,
+            y = display.contentHeight*7/8,
+            width = 250,
+            height = 200,
+
+            -- Insert the images here
+            defaultFile = "Images/level3.png",
+            overFile = "Images/level3.png",
+
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level3ScreenTransition 
+        } )
+
+     -- Associating button widgets with this scene
+    -- Associating display objects with this scene 
+    sceneGroup:insert( level1Button)
+    sceneGroup:insert( level2Button)
+    sceneGroup:insert( level3Button
+
+      
 
 end --function scene:create( event )
 
@@ -94,12 +150,11 @@ function scene:show( event )
     elseif ( phase == "did" ) then
          Level1SoundChannel = audio.play(Level1Sound,{ loops = -1 })
 
-        AddPhysicsBodies()
+      
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        ReplaceCharacter()
-        AddCollisionListeners()
+
     end
 
 end --function scene:show( event )

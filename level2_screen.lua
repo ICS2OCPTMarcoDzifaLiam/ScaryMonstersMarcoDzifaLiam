@@ -1,5 +1,4 @@
 
-
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -60,6 +59,7 @@ local randomOperater
 local numberPoints = 0
 local sub
 local sub2
+
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
@@ -94,10 +94,13 @@ local function RestartScene()
         DisplayAnswers()
     end
 end
+local function gotolevel3()
+    composer.gotoScene("level3_screen")
+end
 
 local function CheckPoints()
         -- monitor points till they reach 5
-    if (numberCorrect == 5) then
+    if (numberPoints == 5) then
 
         -- display the you win screen
         composer.gotoScene("YouWin")
@@ -107,6 +110,8 @@ local function CheckPoints()
 
         --stop bkg music
         audio.stop(youwinSoundChannel)
+
+        timer.performWithDelay(2000,gotolevel3)
 
         
     end
