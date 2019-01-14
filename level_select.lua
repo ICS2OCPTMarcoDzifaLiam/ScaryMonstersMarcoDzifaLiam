@@ -127,8 +127,6 @@ end
     sceneGroup:insert( level2Button)
     sceneGroup:insert( level3Button
 
-      
-
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
