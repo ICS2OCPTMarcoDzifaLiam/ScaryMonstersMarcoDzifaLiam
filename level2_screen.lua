@@ -1,5 +1,4 @@
 
-
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -29,10 +28,6 @@ local wrongSoundChannel
 
 local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
 local correctSoundChannel
-
-
-local GameOverSound = audio.loadSound( "Sounds/GameOver.mp3" )
-local GameOverSoundChannel
 
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
@@ -64,6 +59,7 @@ local randomOperater
 local numberPoints = 0
 local sub
 local sub2
+
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
@@ -98,10 +94,13 @@ local function RestartScene()
         DisplayAnswers()
     end
 end
+local function gotolevel3()
+    composer.gotoScene("level3_screen")
+end
 
 local function CheckPoints()
         -- monitor points till they reach 5
-    if (numberCorrect == 5) then
+    if (numberPoints == 5) then
 
         -- display the you win screen
         composer.gotoScene("YouWin")
@@ -111,6 +110,8 @@ local function CheckPoints()
 
         --stop bkg music
         audio.stop(youwinSoundChannel)
+
+        timer.performWithDelay(2000,gotolevel3)
 
         
     end
@@ -280,10 +281,6 @@ heart3.y = display.contentHeight * 1 / 7
 
 
 
-you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, display.contentHeight)
-you_lose.anchorX = 0
-you_lose.anchorY = 0
-you_lose.isVisible = false
 
 -- display a question and sets the colour 
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/1.5, nil, 70 )
