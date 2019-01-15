@@ -26,7 +26,7 @@ local scene = composer.newScene( sceneName )
 local wrongsound = audio.loadSound( "Sounds/Incorrect.mp3" )
 local wrongSoundChannel
 
-local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
+local correctsound = audio.loadSound( "Sounds/correct.mp3" )
 local correctSoundChannel
 
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
@@ -64,6 +64,10 @@ local sub2
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
+-- Function that transitions to Lose Screen
+local function LoseScreenTransition( )        
+    composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
+end 
 local function WinScreenTransition( )        
     composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
 end 
