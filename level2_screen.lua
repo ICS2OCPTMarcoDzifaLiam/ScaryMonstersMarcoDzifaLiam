@@ -94,6 +94,10 @@ local function RestartScene()
         GameOverSoundChannel = audio.play(GameOverSound)
         audio.stop(GameOverSoundChannel)
 
+        lionessGrowlSoundChannel = audio.play(lionessGrowlSound)
+        audio.stop(lionessGrowlSoundChannel)
+
+
 
     elseif
         (Correct == 5) then
