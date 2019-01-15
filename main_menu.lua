@@ -42,6 +42,7 @@ local muteButton
 local unMuteButton
 local audioMuted
 
+local correctAnswerText
 -----------------------------------------------------------------------------------------
 --SOUNDS
 -----------------------------------------------------------------------------------------
@@ -109,6 +110,8 @@ function scene:create( event )
     bkg_image.width = display.contentWidth
     bkg_image.height = display.contentHeight
 
+    correctAnswerText = display.newText("", display.contentWidth*4/5, display.contentHeight*6/7, nil, 25)
+
 
     
 
@@ -133,7 +136,7 @@ function scene:create( event )
             onRelease = Level1ScreenTransition 
         } )
 
-    muteButton = display.newImage("Images/MuteButtonUnpressedMarcoS@2x.png")
+    muteButton = display.newImage("Images/MuteButtonUnPressedMarcoS@2x.png")
     muteButton.x = display.contentWidth*7/8
     muteButton.y = display.contentHeight*1/8
     muteButton.width = 250
@@ -187,6 +190,7 @@ function scene:create( event )
     -- Associating button widgets with this scene
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+    sceneGroup:insert( numberCorrectText )
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
