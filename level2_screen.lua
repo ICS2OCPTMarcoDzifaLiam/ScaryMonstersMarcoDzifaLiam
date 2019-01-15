@@ -22,7 +22,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
---Spring sound effect
+
 local wrongsound = audio.loadSound( "Sounds/Incorrect.mp3" )
 local wrongSoundChannel
 
@@ -34,6 +34,10 @@ local Level2SoundChannel
 
 local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
 local youwinSoundChannel 
+
+
+local GameOverSound = audio.loadSound("Sounds/GameOverSound.mp3") -- setting a variable to an mp3 file
+local GameOverSoundChannel 
 
 ----------------------------------------------------------------------------------------++=
 -- LOCAL VARIABLES
@@ -92,7 +96,7 @@ local function RestartScene()
 
 
     elseif
-        (Correct == 3) then
+        (Correct == 5) then
         composer.gotoScene("YouWin")
 
 
@@ -106,10 +110,10 @@ end
 
 local function CheckPoints()
         -- monitor points till they reach 2
-    if (numberCorrect == 2) then
+    if (numberCorrect == 5) then
 
         -- display the you win screen
-        composer.gotoScene("you_Win")
+        composer.gotoScene("YouWin")
 
         --play you win sound
         youwinSoundChannel = audio.play(youwinSound)
@@ -297,10 +301,6 @@ you_lose.anchorY = 0
 you_lose.isVisible = false
 
 
-YouWin = display.newImageRect("Images/youwin.png", display.contentWidth, display.contentHeight)
-YouWin.anchorX = 0
-YouWin.anchorY = 0
-YouWin.isVisible = false
 
 -- display a question and sets the colour 
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/1.5, nil, 70 )
