@@ -65,6 +65,10 @@ local platform2
 local platform3
 local platform4
 
+local spikesPoints1 = 0
+local spikesPoints2 = 0
+local spikesPoints3 = 0
+
 local leftW
 local rightW 
 local topW
@@ -155,7 +159,18 @@ local function ReplaceMonster()
     -- add back runtime listeners
     AddRuntimeListeners()
 end
+local function ShowYouWin()
+    youWin.isVisible = true
+end
 
+local function HideMonster()
+    monster.isVisible = false
+end
+
+local function StopMotion()
+    motionx = 0
+
+end
 local function MakeSoccerBallsVisible()
     character1.isVisible = true
     character2.isVisible = true
@@ -177,6 +192,7 @@ local function onCollision( self, event )
             (event.target.myName == "character2") or
             (event.target.myName == "character3")  then
 
+
             print  ("***Hit the character")
 
             -- get the monster that the user hit
@@ -185,6 +201,7 @@ local function onCollision( self, event )
             -- stop the monster from moving
             motionx = 0
 
+            
             -- make the monster invisible
             monster.isVisible = false
 
@@ -192,8 +209,10 @@ local function onCollision( self, event )
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-            print ("***questionsAnswered = " .. questionsAnswered)  
+            
+            print ("***questionsAnswered = " .. questionsAnswered)
+
+            
         end    
 
         if  (event.target.myName == "spikes1") or 
@@ -202,19 +221,38 @@ local function onCollision( self, event )
 
             print  ("***Hit the spikes")
             
+                if (event.target.myName == "spikes1") then 
+                    -- add a point to spikes1 
+                    spikesPoints1 = spikesPoints1 + 1
+                end
 
-            -- stop the monster from moving
-            motionx = 0
+                if (event.target.myName == "spikes2") then
+                    -- add a point to spikes2 
+                    spikesPoints2 = spikesPoints2 + 1
+                end
 
-            -- make the monster invisible
-            monster.isVisible = false
+                if (event.target.myName == "spikes3") then
+                    -- add a point to spikes3 
+                    spikesPoints3 = spikesPoints3 + 1
+                end
+            
 
-            -- show overlay with math question
-            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+            if  (spikesPoints1 == 1) or
+                (spikesPoints2 == 1) or
+                (spikesPoints3 == 1) then
 
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-            print ("***questionsAnswered = " .. questionsAnswered)  
+                -- stop the monster from moving
+                motionx = 0
+
+                -- make the monster invisible
+                monster.isVisible = false
+
+                -- show overlay with math question
+                composer.showOverlay( "level3_question2", { isModal = true, effect = "fade", time = 100})
+
+                
+                print ("***questionsAnswered = " .. questionsAnswered)
+            end  
         end   
      
     end        
@@ -326,12 +364,59 @@ function ResumeLevel3(answerIsCorrect)
         timer.performWithDelay(2000, HideIncorrect)
     end 
     
+    questionsAnswered = questionsAnswered + 1
+    -- make the monster visible again
+    monster.isVisible = true
+
+    if (questionsAnswered == 3) then
+        -- make you win visible
+        timer.performWithDelay(1000, ShowYouWin)         
+
+        -- hide correct
+        timer.performWithDelay(1000, HideIncorrect)
+
+        -- hide incorrect
+        timer.performWithDelay(1000, HideCorrect)         
+            
+        -- make the monster invisible
+        timer.performWithDelay(1000, HideMonster)
+
+        -- stop motion
+        timer.performWithDelay(1000, StopMotion)
+    end
+    if (questionsAnswered > 0) then
+        if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
+            -- remove the physics on the charecter
+            physics.removeBody(theCharacter)
+            -- show the charecter
+            theCharacter.isVisible = false
+        end
+    end
+
+end
+
+function ResumeLevel32(answerIsCorrect)
+
+    if (answerIsCorrect == true) then
+        -- show the correct object 
+        correctObject.isVisible = true
+        --correctSoundChannel = audio.play(correctSound)
+        timer.performWithDelay(2000, HideCorrect)
+    else
+        incorrectObject.isVisible = true
+        --incorrectSoundChannel = audio.play(incorrectSound)
+        --event.target.text = ""
+        timer.performWithDelay(2000, HideIncorrect)
+    end 
+    
     -- make the monster visible again
     monster.isVisible = true
     
     if (questionsAnswered > 0) then
         if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
+            -- remove the physics from the charecter
             physics.removeBody(theCharacter)
+            --show the charecter
             theCharacter.isVisible = false
         end
     end
