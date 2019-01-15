@@ -1,5 +1,4 @@
 
-
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -23,11 +22,11 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
---Spring sound effect
+
 local wrongsound = audio.loadSound( "Sounds/Incorrect.mp3" )
 local wrongSoundChannel
 
-local correctsound = audio.loadSound( "Sounds/CorrectAnswer.mp3" )
+local correctsound = audio.loadSound( "Sounds/correct.mp3" )
 local correctSoundChannel
 
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
@@ -35,6 +34,10 @@ local Level2SoundChannel
 
 local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
 local youwinSoundChannel 
+
+
+local GameOverSound = audio.loadSound("Sounds/GameOverSound.mp3") -- setting a variable to an mp3 file
+local GameOverSoundChannel 
 
 ----------------------------------------------------------------------------------------++=
 -- LOCAL VARIABLES
@@ -60,13 +63,20 @@ local randomOperater
 local numberPoints = 0
 local sub
 local sub2
+
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
+-- Function that transitions to Lose Screen
+local function LoseScreenTransition( )        
+    composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
+end 
 local function WinScreenTransition( )        
     composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
 end 
+
+
 
 local function RestartScene()
 
@@ -74,12 +84,15 @@ local function RestartScene()
     correct.isVisible = false
     incorrect.isVisible = false
 
+    livesText.text = "Number of lives = " .. tostring(lives)
+    numberCorrectText.text = "NumberCorrect = " .. tostring(numberCorrect)
+
     -- if they have 0 lives, go to the You Lose screen
     if (lives == 0) then
         composer.gotoScene("you_lose")
 
-        GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
-        audio.stop(GameOverSound)
+        lionessGrowlSoundChannel = audio.play(lionessGrowlSound)
+        audio.stop(lionessGrowlSoundChannel)
 
 
     elseif
@@ -96,21 +109,27 @@ local function RestartScene()
 end
 
 local function CheckPoints()
-        -- monitor points till they reach 5
+        -- monitor points till they reach 2
     if (numberCorrect == 5) then
 
         -- display the you win screen
         composer.gotoScene("YouWin")
 
         --play you win sound
-       youwinSoundChannel = audio.play(youwinSound)
+        youwinSoundChannel = audio.play(youwinSound)
 
         --stop bkg music
-        audio.stop(youwinSoundChannel)
+        audio.stop(bkgSoundChannel)
 
         
     end
 end
+
+local function gotolevel3()
+    composer.gotoScene("level3_screen")
+end
+
+
 
 
 
@@ -182,7 +201,7 @@ local function AskQuestion()
         --create question text object
         questionObject.text = sub .. " - " .. sub2 .. " = "
 
-    -- If it is 3 the do subtraction
+    -- If it is 3 the do multiplication
     elseif (randomOperator == 3) then
         correctAnswer = randomNumber1 * randomNumber2
 
@@ -274,6 +293,12 @@ heart3 = display.newImageRect("Images/heart.png", 100, 100)
 heart3.x = display.contentWidth * 5 / 8
 heart3.y = display.contentHeight * 1 / 7
 
+
+
+you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, display.contentHeight)
+you_lose.anchorX = 0
+you_lose.anchorY = 0
+you_lose.isVisible = false
 
 
 
