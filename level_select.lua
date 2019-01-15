@@ -32,16 +32,8 @@ local scene = composer.newScene( sceneName )
 local level1Button
 local level2Button
 local level3Button
+local bkg
 
------------------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
------------------------------------------------------------------------------------------
-
--- The function called when the screen doesn't exist
-function scene:create( event )
-
--- Creating a group that associates objects with the scene
-local sceneGroup = self.view
 
 -----------------------------------------------------------------------------------------
 
@@ -56,6 +48,10 @@ end
 
 local function level3ScreenTransition( )        
     composer.gotoScene( "level3_screen", {effect = "zoomInOutFade", time = 1000})
+end 
+
+local function BackTransition( )        
+    composer.gotoScene( "main_menu", {effect = "zoomInOutFade", time = 1000})
 end 
 
  -----------------------------------------------------------------------------------------
