@@ -91,8 +91,8 @@ local function RestartScene()
     if (lives == 0) then
         composer.gotoScene("you_lose")
 
-        lionessGrowlSoundChannel = audio.play(lionessGrowlSound)
-        audio.stop(lionessGrowlSoundChannel)
+        GameOverSoundChannel = audio.play(GameOverSound)
+        audio.stop(GameOverSoundChannel)
 
 
     elseif
