@@ -159,7 +159,18 @@ local function ReplaceMonster()
     -- add back runtime listeners
     AddRuntimeListeners()
 end
+local function ShowYouWin()
+    youWin.isVisible = true
+end
 
+local function HideMonster()
+    monster.isVisible = false
+end
+
+local function StopMotion()
+    motionx = 0
+
+end
 local function MakeSoccerBallsVisible()
     character1.isVisible = true
     character2.isVisible = true
@@ -190,6 +201,7 @@ local function onCollision( self, event )
             -- stop the monster from moving
             motionx = 0
 
+            
             -- make the monster invisible
             monster.isVisible = false
 
@@ -197,7 +209,7 @@ local function onCollision( self, event )
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
+            
             print ("***questionsAnswered = " .. questionsAnswered)
 
             
@@ -236,7 +248,7 @@ local function onCollision( self, event )
                 monster.isVisible = false
 
                 -- show overlay with math question
-                composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+                composer.showOverlay( "level3_question2", { isModal = true, effect = "fade", time = 100})
 
                 
                 print ("***questionsAnswered = " .. questionsAnswered)
@@ -352,12 +364,59 @@ function ResumeLevel3(answerIsCorrect)
         timer.performWithDelay(2000, HideIncorrect)
     end 
     
+    questionsAnswered = questionsAnswered + 1
+    -- make the monster visible again
+    monster.isVisible = true
+
+    if (questionsAnswered == 3) then
+        -- make you win visible
+        timer.performWithDelay(1000, ShowYouWin)         
+
+        -- hide correct
+        timer.performWithDelay(1000, HideIncorrect)
+
+        -- hide incorrect
+        timer.performWithDelay(1000, HideCorrect)         
+            
+        -- make the monster invisible
+        timer.performWithDelay(1000, HideMonster)
+
+        -- stop motion
+        timer.performWithDelay(1000, StopMotion)
+    end
+    if (questionsAnswered > 0) then
+        if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
+            -- remove the physics on the charecter
+            physics.removeBody(theCharacter)
+            -- show the charecter
+            theCharacter.isVisible = false
+        end
+    end
+
+end
+
+function ResumeLevel32(answerIsCorrect)
+
+    if (answerIsCorrect == true) then
+        -- show the correct object 
+        correctObject.isVisible = true
+        --correctSoundChannel = audio.play(correctSound)
+        timer.performWithDelay(2000, HideCorrect)
+    else
+        incorrectObject.isVisible = true
+        --incorrectSoundChannel = audio.play(incorrectSound)
+        --event.target.text = ""
+        timer.performWithDelay(2000, HideIncorrect)
+    end 
+    
     -- make the monster visible again
     monster.isVisible = true
     
     if (questionsAnswered > 0) then
         if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
+            -- remove the physics from the charecter
             physics.removeBody(theCharacter)
+            --show the charecter
             theCharacter.isVisible = false
         end
     end

@@ -12,7 +12,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_question"
+sceneName = "level1_question2"
 
 -----------------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ local function TouchListenerAnswer(touch)
     if (touch.phase == "ended") then
         -- they got it right
         composer.hideOverlay("crossFade", 400 )
-        ResumeLevel3( true )
+        ResumeLevel32( true )
     
     end 
 end
@@ -78,7 +78,7 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         composer.hideOverlay("crossFade", 400 )
-        ResumeLevel3( false )
+        ResumeLevel32( false )
         
         
     end 
@@ -90,7 +90,7 @@ local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
         composer.hideOverlay("crossFade", 400 )
-        ResumeLevel3( false )
+        ResumeLevel32( false )
         
     end 
 end
@@ -100,8 +100,8 @@ local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
         composer.hideOverlay("crossFade", 400 )
-        ResumeLevel3( false )
-
+        ResumeLevel32( false )
+        
         
     end 
 end
