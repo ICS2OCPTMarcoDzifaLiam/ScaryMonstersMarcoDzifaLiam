@@ -187,7 +187,7 @@ local function AskQuestion()
         --create question text object
         questionObject.text = sub .. " - " .. sub2 .. " = "
 
-    -- If it is 3 the do subtraction
+    -- If it is 3 the do multiplication
     elseif (randomOperator == 3) then
         correctAnswer = randomNumber1 * randomNumber2
 
