@@ -72,22 +72,27 @@ local function WinScreenTransition( )
     composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
 end 
 
+
+
 local function RestartScene()
 
     alreadyClickedAnswer = false
     correct.isVisible = false
     incorrect.isVisible = false
 
+    livesText.text = "Number of lives = " .. tostring(lives)
+    numberCorrectText.text = "NumberCorrect = " .. tostring(numberCorrect)
+
     -- if they have 0 lives, go to the You Lose screen
     if (lives == 0) then
         composer.gotoScene("you_lose")
 
-        GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
-        audio.stop(GameOverSound)
+        lionessGrowlSoundChannel = audio.play(lionessGrowlSound)
+        audio.stop(lionessGrowlSoundChannel)
 
 
     elseif
-        (Correct == 5) then
+        (Correct == 3) then
         composer.gotoScene("YouWin")
 
 
@@ -98,28 +103,29 @@ local function RestartScene()
         DisplayAnswers()
     end
 end
-local function gotolevel3()
-    composer.gotoScene("level3_screen")
-end
 
 local function CheckPoints()
-        -- monitor points till they reach 5
-    if (numberPoints == 5) then
+        -- monitor points till they reach 2
+    if (numberCorrect == 2) then
 
         -- display the you win screen
-        composer.gotoScene("YouWin")
+        composer.gotoScene("you_Win")
 
         --play you win sound
-       youwinSoundChannel = audio.play(youwinSound)
+        youwinSoundChannel = audio.play(youwinSound)
 
         --stop bkg music
-        audio.stop(youwinSoundChannel)
-
-        timer.performWithDelay(2000,gotolevel3)
+        audio.stop(bkgSoundChannel)
 
         
     end
 end
+
+local function gotolevel3()
+    composer.gotoScene("level3_screen")
+end
+
+
 
 
 
@@ -285,6 +291,16 @@ heart3.y = display.contentHeight * 1 / 7
 
 
 
+you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, display.contentHeight)
+you_lose.anchorX = 0
+you_lose.anchorY = 0
+you_lose.isVisible = false
+
+
+YouWin = display.newImageRect("Images/youwin.png", display.contentWidth, display.contentHeight)
+YouWin.anchorX = 0
+YouWin.anchorY = 0
+YouWin.isVisible = false
 
 -- display a question and sets the colour 
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/1.5, nil, 70 )
