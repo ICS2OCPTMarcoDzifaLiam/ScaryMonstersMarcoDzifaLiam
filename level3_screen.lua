@@ -65,6 +65,10 @@ local platform2
 local platform3
 local platform4
 
+local spikesPoints1 = 0
+local spikesPoints2 = 0
+local spikesPoints3 = 0
+
 local leftW
 local rightW 
 local topW
@@ -177,6 +181,7 @@ local function onCollision( self, event )
             (event.target.myName == "character2") or
             (event.target.myName == "character3")  then
 
+
             print  ("***Hit the character")
 
             -- get the monster that the user hit
@@ -193,7 +198,9 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
-            print ("***questionsAnswered = " .. questionsAnswered)  
+            print ("***questionsAnswered = " .. questionsAnswered)
+
+            
         end    
 
         if  (event.target.myName == "spikes1") or 
@@ -202,19 +209,38 @@ local function onCollision( self, event )
 
             print  ("***Hit the spikes")
             
+                if (event.target.myName == "spikes1") then 
+                    -- add a point to spikes1 
+                    spikesPoints1 = spikesPoints1 + 1
+                end
 
-            -- stop the monster from moving
-            motionx = 0
+                if (event.target.myName == "spikes2") then
+                    -- add a point to spikes2 
+                    spikesPoints2 = spikesPoints2 + 1
+                end
 
-            -- make the monster invisible
-            monster.isVisible = false
+                if (event.target.myName == "spikes3") then
+                    -- add a point to spikes3 
+                    spikesPoints3 = spikesPoints3 + 1
+                end
+            
 
-            -- show overlay with math question
-            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+            if  (spikesPoints1 == 1) or
+                (spikesPoints2 == 1) or
+                (spikesPoints3 == 1) then
 
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-            print ("***questionsAnswered = " .. questionsAnswered)  
+                -- stop the monster from moving
+                motionx = 0
+
+                -- make the monster invisible
+                monster.isVisible = false
+
+                -- show overlay with math question
+                composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
+
+                
+                print ("***questionsAnswered = " .. questionsAnswered)
+            end  
         end   
      
     end        
