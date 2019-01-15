@@ -188,8 +188,8 @@ local function AskQuestion()
     randomOperator = math.random(1,3)
     randomNumber1 = math.random(0,10)
     randomNumber2 = math.random(0,10)
-    sub = math.random(6,10)
-    sub2 = math.random(5,10)
+    sub = math.random(10,20)
+    sub2 = math.random(2,10)
 
     -- if the random operater is one then do addition
     if (randomOperator == 1) then
