@@ -72,10 +72,6 @@ local sub2
 local function LoseScreenTransition( )        
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
 end 
-local function WinScreenTransition( )        
-    composer.gotoScene( "YouWin", {effect = "zoomInOutFade", time = 1000})
-end 
-
 
 
 local function RestartScene()
@@ -94,15 +90,12 @@ local function RestartScene()
         GameOverSoundChannel = audio.play(GameOverSound)
         audio.stop(GameOverSoundChannel)
 
-        lionessGrowlSoundChannel = audio.play(lionessGrowlSound)
-        audio.stop(lionessGrowlSoundChannel)
-
-
-
     elseif
         (Correct == 5) then
         composer.gotoScene("YouWin")
 
+        youwinSoundChannel = audio.play(youwinSound)
+        audio.stop(youwinSoundChannel)
 
     else 
 
@@ -113,7 +106,7 @@ local function RestartScene()
 end
 
 local function CheckPoints()
-        -- monitor points till they reach 2
+        -- monitor points till they reach 5
     if (numberCorrect == 5) then
 
         -- display the you win screen
@@ -129,12 +122,9 @@ local function CheckPoints()
     end
 end
 
-local function gotolevel3()
-    composer.gotoScene("level3_screen")
+local function GoToLevel3()
+    composer.gotoScene( "level3_screen" )
 end
-
-
-
 
 
 local function UpdateHearts()
@@ -176,10 +166,6 @@ local function UpdateHearts()
             questionObject.isVisible = false
         end
 end
-
-
-
-
 
 
 
@@ -303,6 +289,11 @@ you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, dis
 you_lose.anchorX = 0
 you_lose.anchorY = 0
 you_lose.isVisible = false
+
+YouWin = display.newImageRect("Images/YouWinScreen.png", display.contentWidth, display.contentHeight)
+YouWin.anchorX = 0
+YouWin.anchorY = 0
+YouWin.isVisible = false
 
 
 
