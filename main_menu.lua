@@ -190,7 +190,6 @@ function scene:create( event )
     -- Associating button widgets with this scene
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
-    sceneGroup:insert( numberCorrectText )
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
