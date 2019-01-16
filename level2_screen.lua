@@ -36,7 +36,7 @@ local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable t
 local youwinSoundChannel 
 
 
-local GameOverSound = audio.loadSound("Sounds/GameOverSound.mp3") -- setting a variable to an mp3 file
+local GameOverSound = audio.loadSound("Sounds/GameOver.mp3") -- setting a variable to an mp3 file
 local GameOverSoundChannel 
 
 ----------------------------------------------------------------------------------------++=
@@ -367,7 +367,6 @@ end
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
- audio.stop(Level2Sound)
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase

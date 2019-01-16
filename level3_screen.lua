@@ -5,11 +5,7 @@
 -- Date: Month Day, Year
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
---SOUNDS
------------------------------------------------------------------------------------------
-local Level1ScreenSound = audio.loadSound("Sounds/Level1.mp3") -- setting a variable to an mp3 file
-local Level1ScreenSoundChannel 
+
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -31,6 +27,12 @@ sceneName = "level3_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+local Level1ScreenSound = audio.loadSound("Sounds/Level1.mp3") -- setting a variable to an mp3 file
+local Level1ScreenSoundChannel 
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -632,7 +634,7 @@ function scene:hide( event )
         -- Called immediately after scene goes off screen.
         RemoveArrowEventListeners()
         RemoveCollisionListeners()
-        audio.stop(Level1Screen)
+        audio.stop(Level1ScreenSoundChannel)
     end
 
 end --function scene:hide( event )
