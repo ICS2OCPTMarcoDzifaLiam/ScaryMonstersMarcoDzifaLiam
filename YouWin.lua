@@ -32,6 +32,10 @@ local bkg
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+local function Level3Transition()
+    composer.gotoScene("level3_screen")
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -79,6 +83,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        timer.performWithDelay(2000, Level3Transition)
     end
 
 end

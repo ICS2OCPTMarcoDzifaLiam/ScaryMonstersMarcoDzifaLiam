@@ -49,6 +49,9 @@ local heart1
 local heart2
 local heart3
 
+local youWin
+local you_lose
+
 -- create local variables
 local questionObject
 local correctObject
@@ -64,6 +67,11 @@ local numberPoints = 0
 local sub
 local sub2
 
+local pointsTextObject
+local bkg_image
+
+
+
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
@@ -72,82 +80,104 @@ local sub2
 local function LoseScreenTransition( )        
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
 end 
-
-
-local function RestartScene()
-
-    alreadyClickedAnswer = false
-    correct.isVisible = false
-    incorrect.isVisible = false
-
-    livesText.text = "Number of lives = " .. tostring(lives)
-    numberCorrectText.text = "NumberCorrect = " .. tostring(numberCorrect)
-
-    -- if they have 0 lives, go to the You Lose screen
-    if (lives == 0) then
-        composer.gotoScene("you_lose")
-
-        GameOverSoundChannel = audio.play(GameOverSound)
-        audio.stop(GameOverSoundChannel)
-
-    elseif
-        (Correct == 5) then
-        composer.gotoScene("YouWin")
-
-        youwinSoundChannel = audio.play(youwinSound)
-        audio.stop(youwinSoundChannel)
-
-    else 
-
-        DisplayAddEquation()
-        DetermineAnswers()
-        DisplayAnswers()
-    end
-end
-
-local function CheckPoints()
-        -- monitor points till they reach 5
-    if (numberCorrect == 5) then
-
-        -- display the you win screen
-        composer.gotoScene("YouWin")
-
-        --play you win sound
-        youwinSoundChannel = audio.play(youwinSound)
-
-        --stop bkg music
-        audio.stop(bkgSoundChannel)
-
-        
-    end
+local function HideYouLose()
+    you_lose.isVisible = false
 end
 
 local function GoToLevel3()
     composer.gotoScene( "level3_screen" )
 end
 
+local function HideYouWin()
+    youWin.isVisible = false
+end
+local function RestartScene()
+
+    --alreadyClickedAnswer = false
+    --correct.isVisible = false
+    --incorrect.isVisible = false
+
+    --livesText.text = "Number of lives = " .. tostring(lives)
+    --numberCorrectText.text = "NumberCorrect = " .. tostring(numberCorrect)
+
+    -- if they have 0 lives, go to the You Lose screen
+    if (lives == 0) then
+
+        you_lose.isVisible = true
+
+        pointsTextObject.isVisible = false
+
+        questionObject.isVisible = false
+
+        numericField.isVisible = false
+
+        heart1.isVisible = false
+
+        heart2.isVisible = false
+
+        heart3.isVisible = false
+
+        bkg_image.isVisible = false
+
+        timer.performWithDelay(2050, GoToLevel3)
+
+        timer.performWithDelay(2000, HideYouLose)
+
+        
+
+        
+
+        
+    end
+
+    if (numberPoints == 5) then
+
+        youWin.isVisible = true
+
+        pointsTextObject.isVisible = false
+
+        questionObject.isVisible = false
+
+        numericField.isVisible = false
+
+        heart1.isVisible = false
+
+        heart2.isVisible = false
+
+        heart3.isVisible = false
+
+        bkg_image.isVisible = false
+
+        timer.performWithDelay(2050, GoToLevel3)
+
+        timer.performWithDelay(2000, HideYouWin)
+
+        youwinSoundChannel = audio.play(youwinSound)
+    end
+end
+
 
 local function UpdateHearts()
     if (lives == 3) then
-            heart1.isVisible = true
-            heart2.isVisible = true
-            heart3.isVisible = true
+        heart1.isVisible = true
+        heart2.isVisible = true
+        heart3.isVisible = true
     
 
 
-        elseif (lives == 2) then
+    elseif (lives == 2) then
             heart1.isVisible = true
             heart2.isVisible = true
             heart3.isVisible = false
 
         
-        elseif (lives == 1) then
+    elseif (lives == 1) then
             heart1.isVisible = true
             heart2.isVisible = false
             heart3.isVisible = false
 
 
-        elseif (lives == 0) then
+    elseif (lives == 0) then
             heart1.isVisible = false
             heart2.isVisible = false
             heart3.isVisible = false
@@ -156,15 +186,10 @@ local function UpdateHearts()
 
             you_lose.isVisible = true
             GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
-            lives = lives - 1
-            UpdateHearts()
-            incorrectObject.isVisible = false
             
-
-            numericField.isVisible = false
-            pointsTextObject.isVisible = false
-            questionObject.isVisible = false
-        end
+            GoToLevel3()
+            
+    end
 end
 
 
@@ -176,6 +201,7 @@ local function AskQuestion()
     randomNumber2 = math.random(0,10)
     sub = math.random(10,20)
     sub2 = math.random(2,10)
+
 
     -- if the random operater is one then do addition
     if (randomOperator == 1) then
@@ -236,17 +262,19 @@ local function NumericFieldListener( event )
                 correctSoundChannel = audio.play(correctSound)  
                 timer.performWithDelay(2000, HideCorrect)
                 numberPoints = numberPoints + 1
-                CheckPoints()
-
+                RestartScene()
                     -- create increasing points in the text object
                 pointsTextObject.text = "Points = ".. numberPoints
+                RestartScene()
+
 
             -- If the users answer is incorrect, Incorrect is displayed
             else            
                 incorrectObject.isVisible = true
                 wrongSoundChannel = audio.play(wrongSound)
                 lives = lives - 1
-                UpdateHearts()  
+                UpdateHearts() 
+                RestartScene() 
                 timer.performWithDelay(2000, HideIncorrect)
 
         
@@ -261,6 +289,11 @@ end
 ---------------------------------------------------------------------
 -- OBJECT CREATION
 ---------------------------------------------------------------------
+-- The function called when the screen doesn't exist
+function scene:create( event )
+
+    -- Creating a group that associates objects with the scene
+    local sceneGroup = self.view
 
 
 -- Insert the background image and set it to the center of the screen
@@ -269,6 +302,14 @@ bkg_image.x = display.contentCenterX
 bkg_image.y = display.contentCenterY
 bkg_image.width = display.contentWidth
 bkg_image.height = display.contentHeight
+
+youWin = display.newImage("Images/YouWinScreen.png")
+youWin.x = display.contentCenterX
+youWin.y = display.contentCenterY
+youWin.width = display.contentWidth
+youWin.height = display.contentHeight
+youWin.isVisible = false
+
 
 -- create the lives to display on the screen
 heart1 = display.newImageRect("Images/heart.png", 100, 100)
@@ -290,10 +331,6 @@ you_lose.anchorX = 0
 you_lose.anchorY = 0
 you_lose.isVisible = false
 
-YouWin = display.newImageRect("Images/YouWinScreen.png", display.contentWidth, display.contentHeight)
-YouWin.anchorX = 0
-YouWin.anchorY = 0
-YouWin.isVisible = false
 
 
 
@@ -326,7 +363,7 @@ numericField:addEventListener("userInput", NumericFieldListener )
 
 
 
-
+end --function scene:create( event )
 
 
 -----------------------------------------------------------------------------------------
@@ -385,6 +422,8 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
          -- Called immediately after scene goes off screen.
         audio.stop (Level2SoundChannel)
+        audio.stop(GameOverSoundChannel)
+        audio.stop(youwinSoundChannel)
     end
 
 end
