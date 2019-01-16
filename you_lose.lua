@@ -5,11 +5,7 @@
 -- Date: Month Day, Year
 -- Description: This shows the player that they lost the game and plays a booing sound.
 -----------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------
--- SOUNDS
----------------------------------------------------------------------------------------
-local GameOverSound = audio.loadSound( "Sounds/GameOver.mp3" )
-local GameOverSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -34,7 +30,13 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 -- local variables for the scene
-local bkg
+local you_lose
+
+---------------------------------------------------------------------------------------
+-- SOUNDS
+---------------------------------------------------------------------------------------
+local GameOverSound = audio.loadSound( "Sounds/GameOver.mp3" )
+local GameOverSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -55,11 +57,11 @@ function scene:create( event )
    you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, display.contentHeight)
    you_lose.anchorX = 0
    you_lose.anchorY = 0
-   you_lose.isVisible = false
+
     -----------------------------------------------------------------------------------------     
 
     -- Associating display objects with this scene 
-    sceneGroup:insert( bkg )
+    sceneGroup:insert( you_lose )
 end
 
 -----------------------------------------------------------------------------------------

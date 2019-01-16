@@ -479,7 +479,7 @@ end --function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
- audio.stop(Level1Sound)
+ 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
@@ -497,6 +497,7 @@ function scene:hide( event )
         -- Called immediately after scene goes off screen.
         RemoveArrowEventListeners()
         RemoveCollisionListeners()
+        audio.stop(Level1SoundChannel)
     end
 
 end --function scene:hide( event )
