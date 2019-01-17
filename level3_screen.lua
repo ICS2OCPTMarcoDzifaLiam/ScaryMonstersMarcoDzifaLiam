@@ -84,10 +84,15 @@ local nSPEED = -6
 local LINEAR_VELOCITY = -225
 local GRAVITY = 1
 
+
 ---------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ----------------------------------------------------------------------
+local function ShowMonster()
+    monster.isVisible = true
+end
 
+timer.performWithDelay(2000, ShowMonster)
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
@@ -148,8 +153,8 @@ local function ReplaceMonster()
     monster.width = 75
     monster.height = 100
     monster.myName = "KickyKat"
-    
-
+    monster.isVisible = false
+    ShowMonster()
     -- intialize horizontal movement of monster
     motionx = 0
 
@@ -601,7 +606,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        
+        physics.start()
         -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
 
@@ -614,7 +619,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        physics.start()
+        
         ReplaceMonster()
         AddCollisionListeners()
     end

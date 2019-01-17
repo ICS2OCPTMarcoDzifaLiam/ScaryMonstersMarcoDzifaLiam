@@ -105,6 +105,10 @@ local function RestartScene()
 
         you_lose.isVisible = true
 
+        correctObject.isVisible = false
+
+        incorrectObject.isVisible = false
+
         pointsTextObject.isVisible = false
 
         questionObject.isVisible = false
@@ -119,7 +123,7 @@ local function RestartScene()
 
         bkg_image.isVisible = false
 
-        timer.performWithDelay(2050, GoToLevel3)
+        timer.performWithDelay(2000, GoToLevel3)
 
         timer.performWithDelay(2000, HideYouLose)
 
@@ -133,6 +137,10 @@ local function RestartScene()
     if (numberPoints == 5) then
 
         youWin.isVisible = true
+
+        correctObject.isVisible = false
+
+        incorrectObject.isVisible = false
 
         pointsTextObject.isVisible = false
 
@@ -184,11 +192,10 @@ local function UpdateHearts()
         
         
 
-            you_lose.isVisible = true
+            
             GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
             
-            GoToLevel3()
-            
+                        
     end
 end
 
