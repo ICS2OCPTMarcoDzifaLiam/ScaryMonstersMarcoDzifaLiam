@@ -73,6 +73,8 @@ local nSPEED = -6
 local LINEAR_VELOCITY = -225
 local GRAVITY = 1
 
+local character
+
 ----------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ----------------------------------------------------------------------
@@ -490,6 +492,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        physics.stop()
 
     -----------------------------------------------------------------------------------------
 

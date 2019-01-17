@@ -76,6 +76,8 @@ local rightW
 local topW
 local floor
 
+local monster
+
 local motionx = 0
 local SPEED = 6
 local nSPEED = -6
@@ -138,6 +140,7 @@ local function RemoveRuntimeListeners()
     Runtime:removeEventListener("enterFrame", movePlayer)
     Runtime:removeEventListener("touch", stop )
 end
+
 local function ReplaceMonster()
     monster = display.newImageRect("Images/Monster1.png", 100, 150)
     monster.x = display.contentWidth * 0.5 / 8
@@ -145,6 +148,7 @@ local function ReplaceMonster()
     monster.width = 75
     monster.height = 100
     monster.myName = "KickyKat"
+    
 
     -- intialize horizontal movement of monster
     motionx = 0
@@ -161,6 +165,7 @@ local function ReplaceMonster()
     -- add back runtime listeners
     AddRuntimeListeners()
 end
+
 local function ShowYouWin()
     youWin.isVisible = true
 end
@@ -355,6 +360,10 @@ end
 
 function ResumeLevel3(answerIsCorrect)
 
+    questionsAnswered = questionsAnswered + 1
+    -- make the monster visible again
+    monster.isVisible = true
+
     if (answerIsCorrect == true) then
         correctObject.isVisible = true
         --correctSoundChannel = audio.play(correctSound)
@@ -366,9 +375,7 @@ function ResumeLevel3(answerIsCorrect)
         timer.performWithDelay(2000, HideIncorrect)
     end 
     
-    questionsAnswered = questionsAnswered + 1
-    -- make the monster visible again
-    monster.isVisible = true
+    
 
     if (questionsAnswered == 3) then
         -- make you win visible
@@ -594,7 +601,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        physics.start()
+        
         -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
 
@@ -606,6 +613,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+
+        physics.start()
         ReplaceMonster()
         AddCollisionListeners()
     end
@@ -627,7 +636,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
+        physics.stop()
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then

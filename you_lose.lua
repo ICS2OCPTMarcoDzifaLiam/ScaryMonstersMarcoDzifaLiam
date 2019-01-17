@@ -42,6 +42,10 @@ local GameOverSoundChannel
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+local function Level3Transition()
+    composer.gotoScene("level3_screen")
+end
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -89,6 +93,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         GameOverSoundChannel = audio.play(GameOverSound)
+        timer.performWithDelay(2000, Level3Transition)
     end
 
 end
