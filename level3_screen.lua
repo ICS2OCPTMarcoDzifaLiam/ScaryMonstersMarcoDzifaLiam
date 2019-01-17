@@ -93,7 +93,7 @@ local function ShowMonster()
     monster.isVisible = true
 end
 
-timer.performWithDelay(2000, ShowMonster)
+
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
@@ -208,7 +208,7 @@ local function onCollision( self, event )
 
             print  ("***Hit the character")
 
-            questionsAnswered = questionsAnswered + 2
+            questionsAnswered = questionsAnswered + 1
             -- get the monster that the user hit
             theCharacter = event.target
 
@@ -258,6 +258,8 @@ local function onCollision( self, event )
                 -- stop the monster from moving
                 motionx = 0
 
+                  -- get the monster that the user hit
+                theCharacter = event.target
 
                 -- make the monster invisible
                 monster.isVisible = false
@@ -368,7 +370,7 @@ end
 
 function ResumeLevel3(answerIsCorrect)
 
-    questionsAnswered = questionsAnswered + 1
+
     -- make the monster visible again
     monster.isVisible = true
 
@@ -385,7 +387,7 @@ function ResumeLevel3(answerIsCorrect)
     
     
 
-    if (questionsAnswered == 9) then
+    if (questionsAnswered == 3) then
         -- make you win visible
         timer.performWithDelay(1000, ShowYouWin)         
 
@@ -486,9 +488,9 @@ function scene:create( event )
         
     sceneGroup:insert( spikes1)
 
-    spikes2 = display.newImageRect("Images/Spike2.png", 300, 50)
-    spikes2.x = display.contentWidth * 5 / 8
-    spikes2.y = display.contentHeight * 2.7 / 5
+    spikes2 = display.newImageRect("Images/Spikes.png", 50, 270)
+    spikes2.x = display.contentWidth * 7.5 / 8
+    spikes2.y = display.contentHeight * 2.1 / 5
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
