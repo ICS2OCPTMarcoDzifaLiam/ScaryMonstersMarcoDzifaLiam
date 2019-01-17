@@ -46,6 +46,7 @@ local uArrow
 local lArrow
 
 local questionsAnswered = 0
+local spikesAnswered = 0
 
 local character1
 local character2
@@ -207,6 +208,7 @@ local function onCollision( self, event )
 
             print  ("***Hit the character")
 
+            questionsAnswered = questionsAnswered + 2
             -- get the monster that the user hit
             theCharacter = event.target
 
@@ -256,11 +258,12 @@ local function onCollision( self, event )
                 -- stop the monster from moving
                 motionx = 0
 
+
                 -- make the monster invisible
                 monster.isVisible = false
 
                 -- show overlay with math question
-                composer.showOverlay( "level3_question2", { isModal = true, effect = "fade", time = 100})
+                composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
                 
                 print ("***questionsAnswered = " .. questionsAnswered)
@@ -382,7 +385,7 @@ function ResumeLevel3(answerIsCorrect)
     
     
 
-    if (questionsAnswered == 3) then
+    if (questionsAnswered == 9) then
         -- make you win visible
         timer.performWithDelay(1000, ShowYouWin)         
 
@@ -409,33 +412,7 @@ function ResumeLevel3(answerIsCorrect)
 
 end
 
-function ResumeLevel32(answerIsCorrect)
 
-    if (answerIsCorrect == true) then
-        -- show the correct object 
-        correctObject.isVisible = true
-        --correctSoundChannel = audio.play(correctSound)
-        timer.performWithDelay(2000, HideCorrect)
-    else
-        incorrectObject.isVisible = true
-        --incorrectSoundChannel = audio.play(incorrectSound)
-        --event.target.text = ""
-        timer.performWithDelay(2000, HideIncorrect)
-    end 
-    
-    -- make the monster visible again
-    monster.isVisible = true
-    
-    if (questionsAnswered > 0) then
-        if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
-            -- remove the physics from the charecter
-            physics.removeBody(theCharacter)
-            --show the charecter
-            theCharacter.isVisible = false
-        end
-    end
-
-end
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
