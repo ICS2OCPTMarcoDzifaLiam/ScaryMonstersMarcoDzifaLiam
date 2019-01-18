@@ -35,7 +35,6 @@ local Level2SoundChannel
 local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
 local youwinSoundChannel 
 
-
 local GameOverSound = audio.loadSound("Sounds/GameOver.mp3") -- setting a variable to an mp3 file
 local GameOverSoundChannel 
 
@@ -84,8 +83,35 @@ local function HideYouLose()
     you_lose.isVisible = false
 end
 
+local function HideEverything()
+    correctObject.isVisible = false
+
+    incorrectObject.isVisible = false
+
+    pointsTextObject.isVisible = false
+
+    questionObject.isVisible = false
+
+    numericField.isVisible = false
+
+    heart1.isVisible = false
+
+    heart2.isVisible = false
+
+    heart3.isVisible = false
+
+    bkg_image.isVisible = false
+end
 local function GoToLevel3()
     composer.gotoScene( "level3_screen" )
+end
+
+local function ShowYouWin()
+    youWin.isVisible = true
+end
+
+local function ShowYouLose()
+    you_lose.isVisible = true
 end
 
 local function HideYouWin()
@@ -103,23 +129,11 @@ local function RestartScene()
     -- if they have 0 lives, go to the You Lose screen
     if (lives == 0) then
 
-        you_lose.isVisible = true
+        timer.performWithDelay(500, ShowYouLose)
 
-        pointsTextObject.isVisible = false
+        timer.performWithDelay(500, HideEverything)
 
-        questionObject.isVisible = false
-
-        numericField.isVisible = false
-
-        heart1.isVisible = false
-
-        heart2.isVisible = false
-
-        heart3.isVisible = false
-
-        bkg_image.isVisible = false
-
-        timer.performWithDelay(2050, GoToLevel3)
+        timer.performWithDelay(2000, GoToLevel3)
 
         timer.performWithDelay(2000, HideYouLose)
 
@@ -132,21 +146,9 @@ local function RestartScene()
 
     if (numberPoints == 5) then
 
-        youWin.isVisible = true
+        timer.performWithDelay(500, ShowYouWin)
 
-        pointsTextObject.isVisible = false
-
-        questionObject.isVisible = false
-
-        numericField.isVisible = false
-
-        heart1.isVisible = false
-
-        heart2.isVisible = false
-
-        heart3.isVisible = false
-
-        bkg_image.isVisible = false
+        timer.performWithDelay(500, HideEverything)
 
         timer.performWithDelay(2050, GoToLevel3)
 
@@ -184,11 +186,10 @@ local function UpdateHearts()
         
         
 
-            you_lose.isVisible = true
+            
             GameOverSoundChannel = audio.play(GameOverSound,{ loops = -1 })
             
-            GoToLevel3()
-            
+                        
     end
 end
 

@@ -46,6 +46,7 @@ local uArrow
 local lArrow
 
 local questionsAnswered = 0
+local spikesAnswered = 0
 
 local character1
 local character2
@@ -84,9 +85,14 @@ local nSPEED = -6
 local LINEAR_VELOCITY = -225
 local GRAVITY = 1
 
+
 ---------------------------------------------------------------
 -- LOCAL FUNCTIONS
 ----------------------------------------------------------------------
+local function ShowMonster()
+    monster.isVisible = true
+end
+
 
 -- When right arrow is touched, move character right
 local function right (touch)
@@ -148,8 +154,8 @@ local function ReplaceMonster()
     monster.width = 75
     monster.height = 100
     monster.myName = "KickyKat"
-    
-
+    monster.isVisible = false
+    ShowMonster()
     -- intialize horizontal movement of monster
     motionx = 0
 
@@ -202,6 +208,7 @@ local function onCollision( self, event )
 
             print  ("***Hit the character")
 
+            questionsAnswered = questionsAnswered + 1
             -- get the monster that the user hit
             theCharacter = event.target
 
@@ -251,11 +258,14 @@ local function onCollision( self, event )
                 -- stop the monster from moving
                 motionx = 0
 
+                  -- get the monster that the user hit
+                theCharacter = event.target
+
                 -- make the monster invisible
                 monster.isVisible = false
 
                 -- show overlay with math question
-                composer.showOverlay( "level3_question2", { isModal = true, effect = "fade", time = 100})
+                composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
                 
                 print ("***questionsAnswered = " .. questionsAnswered)
@@ -360,7 +370,7 @@ end
 
 function ResumeLevel3(answerIsCorrect)
 
-    questionsAnswered = questionsAnswered + 1
+
     -- make the monster visible again
     monster.isVisible = true
 
@@ -404,33 +414,7 @@ function ResumeLevel3(answerIsCorrect)
 
 end
 
-function ResumeLevel32(answerIsCorrect)
 
-    if (answerIsCorrect == true) then
-        -- show the correct object 
-        correctObject.isVisible = true
-        --correctSoundChannel = audio.play(correctSound)
-        timer.performWithDelay(2000, HideCorrect)
-    else
-        incorrectObject.isVisible = true
-        --incorrectSoundChannel = audio.play(incorrectSound)
-        --event.target.text = ""
-        timer.performWithDelay(2000, HideIncorrect)
-    end 
-    
-    -- make the monster visible again
-    monster.isVisible = true
-    
-    if (questionsAnswered > 0) then
-        if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
-            -- remove the physics from the charecter
-            physics.removeBody(theCharacter)
-            --show the charecter
-            theCharacter.isVisible = false
-        end
-    end
-
-end
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -504,9 +488,9 @@ function scene:create( event )
         
     sceneGroup:insert( spikes1)
 
-    spikes2 = display.newImageRect("Images/Spike2.png", 300, 50)
-    spikes2.x = display.contentWidth * 5 / 8
-    spikes2.y = display.contentHeight * 2.7 / 5
+    spikes2 = display.newImageRect("Images/Spikes.png", 50, 270)
+    spikes2.x = display.contentWidth * 7.5 / 8
+    spikes2.y = display.contentHeight * 2.1 / 5
     spikes2.myName = "spikes2"
         
     sceneGroup:insert( spikes2)
@@ -601,7 +585,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        
+        physics.start()
         -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
 
@@ -614,7 +598,7 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
-        physics.start()
+        
         ReplaceMonster()
         AddCollisionListeners()
     end
