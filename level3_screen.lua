@@ -403,6 +403,7 @@ function ResumeLevel3(answerIsCorrect)
         -- stop motion
         timer.performWithDelay(1000, StopMotion)
     end
+    
     if (questionsAnswered > 0) then
         if (theCharacter ~= nil) and (theCharacter.isBodyActive == true) then
             -- remove the physics on the charecter

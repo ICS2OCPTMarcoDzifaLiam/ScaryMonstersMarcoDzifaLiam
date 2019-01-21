@@ -75,10 +75,6 @@ local bkg_image
 -- LOCAL FUNCTIONS
 ---------------------------------------------------------------------
 
--- Function that transitions to Lose Screen
-local function LoseScreenTransition( )        
-    composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
-end 
 local function HideYouLose()
     you_lose.isVisible = false
 end
@@ -102,6 +98,7 @@ local function HideEverything()
 
     bkg_image.isVisible = false
 end
+
 local function GoToLevel3()
     composer.gotoScene( "level3_screen" )
 end
@@ -117,6 +114,7 @@ end
 local function HideYouWin()
     youWin.isVisible = false
 end
+
 local function RestartScene()
 
     --alreadyClickedAnswer = false
@@ -142,9 +140,7 @@ local function RestartScene()
         
 
         
-    end
-
-    if (numberPoints == 5) then
+    elseif (numberPoints == 5) then
 
         timer.performWithDelay(500, ShowYouWin)
 
@@ -263,7 +259,7 @@ local function NumericFieldListener( event )
                 correctSoundChannel = audio.play(correctSound)  
                 timer.performWithDelay(2000, HideCorrect)
                 numberPoints = numberPoints + 1
-                RestartScene()
+
                     -- create increasing points in the text object
                 pointsTextObject.text = "Points = ".. numberPoints
                 RestartScene()
