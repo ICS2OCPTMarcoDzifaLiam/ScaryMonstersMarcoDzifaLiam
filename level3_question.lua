@@ -14,8 +14,6 @@ local physics = require( "physics")
 -- Naming Scene
 sceneName = "level3_question"
 
-sceneName = "level3_question2"
-
 
 -----------------------------------------------------------------------------------------
 
