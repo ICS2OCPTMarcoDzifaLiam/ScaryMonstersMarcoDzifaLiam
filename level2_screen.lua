@@ -22,19 +22,19 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 -- SOUNDS
 -----------------------------------------------------------------------------------------
-
+-- creating wrong sound
 local wrongsound = audio.loadSound( "Sounds/Incorrect.mp3" )
 local wrongSoundChannel
-
+-- creating correct sound
 local correctsound = audio.loadSound( "Sounds/correct.mp3" )
 local correctSoundChannel
-
+-- creating level 2 sound
 local Level2Sound = audio.loadSound("Sounds/Level2.mp3") -- setting a variable to an mp3 file
 local Level2SoundChannel 
-
+-- creating youwin sound
 local youwinSound = audio.loadSound("Sounds/youwin.mp3") -- setting a variable to an mp3 file
 local youwinSoundChannel 
-
+-- creating gameover sound
 local GameOverSound = audio.loadSound("Sounds/GameOver.mp3") -- setting a variable to an mp3 file
 local GameOverSoundChannel 
 
@@ -300,6 +300,7 @@ bkg_image.y = display.contentCenterY
 bkg_image.width = display.contentWidth
 bkg_image.height = display.contentHeight
 
+-- create you win screen
 youWin = display.newImage("Images/YouWinScreen.png")
 youWin.x = display.contentCenterX
 youWin.y = display.contentCenterY
@@ -322,7 +323,7 @@ heart3.x = display.contentWidth * 5 / 8
 heart3.y = display.contentHeight * 1 / 7
 
 
-
+-- create you lose screen
 you_lose = display.newImageRect("Images/you_lose.png", display.contentWidth, display.contentHeight)
 you_lose.anchorX = 0
 you_lose.anchorY = 0
@@ -417,7 +418,8 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-         -- Called immediately after scene goes off screen.
+     -- Called immediately after scene goes off screen.
+     -- Stop audio
         audio.stop (Level2SoundChannel)
         audio.stop(GameOverSoundChannel)
         audio.stop(youwinSoundChannel)
