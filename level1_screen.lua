@@ -96,6 +96,9 @@ local function left (touch)
     motionx = nSPEED
     character.xScale = -1
 end
+local function HideYouWin()
+    youWin.isVisible = false
+end
 
 local function GoToLevel2()
     composer.gotoScene( "level2_screen" )
@@ -202,6 +205,9 @@ local function onCollision( self, event )
         if (questionsAnswered == 3) then
             youWin.isVisible = true
             character.isVisible = false
+            correctObject.isVisible = false
+            incorrectObject.isVisible = false
+            timer.performWithDelay(2000, HideYouWin)
             timer.performWithDelay(2000, GoToLevel2)
             --youWinSoundChannel = audio.play(youWinSound)
             -- after getting 3 questions right, go to the you win screen

@@ -149,7 +149,7 @@ local function RestartScene()
         timer.performWithDelay(2050, GoToLevel3)
 
         timer.performWithDelay(2000, HideYouWin)
-
+        
         youwinSoundChannel = audio.play(youwinSound)
     end
 end
